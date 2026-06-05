@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - Finalize Payment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body {
+            background-color: #03030c;
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/0F7F9301-6C76-4FFE-8283-3FC397A104E3.png?raw=true');
+            background-size: cover; background-position: center top; background-repeat: no-repeat;
+            color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif;
+        }
+        header { width: 100%; max-width: 1200px; margin: 24px auto 0 auto; padding: 0 16px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; padding: 10px 24px; backdrop-filter: blur(20px); height: 54px; }
+        .logo { font-family: 'Audiowide', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 2px; color: #ffffff; text-decoration: none; }
+        
+        /* Progress Steps */
+        .steps-container { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 40px auto 10px auto; font-size: 14px; color: rgba(255, 255, 255, 0.35); }
+        .step { display: flex; align-items: center; gap: 8px; }
+        .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .step.active { color: #ffffff; font-weight: 600; }
+        .step.active .step-num { background: #6366f1; color: #ffffff; border-color: #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.5); }
+        .step-line { width: 40px; height: 1px; background: rgba(255, 255, 255, 0.1); }
+
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        .payment-card { background: rgba(10, 11, 28, 0.65); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 28px; width: 100%; max-width: 460px; padding: 40px; backdrop-filter: blur(20px); box-shadow: 0 25px 60px rgba(0,0,0,0.5); position: relative; }
+        .payment-card::before { content: ''; position: absolute; top: 0; left: 20%; width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), transparent); }
+        
+        .card-title { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 28px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); margin-bottom: 8px; }
+        .form-input { width: 100%; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 16px; color: #ffffff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .form-input:focus { border-color: rgba(99, 102, 241, 0.5); }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .btn-pay { width: 100%; background: #ffffff; color: #000000; border: none; padding: 16px; border-radius: 100px; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; margin-top: 12px; }
+        .btn-pay:hover { opacity: 0.95; }
+        .secure-footer { text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.35); margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar"><a href="index.html" class="logo">ARGUSVPN</a></nav>
+    </header>
+
+    <!-- پیشروی به مرحله ۳ -->
+    <div class="steps-container">
+        <div class="step"><span class="step-num">1</span><span>Subscription</span></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="step-num">2</span><span>Payment information</span></div>
+        <div class="step-line"></div>
+        <div class="step active"><span class="step-num">3</span><span>Payment</span></div>
+    </div>
+
+    <main>
+        <div class="payment-card">
+            <h2 class="card-title">Credit Card Payment</h2>
+            <form onsubmit="event.preventDefault(); alert('Payment Successful! Welcome to ARGUSVPN.');">
+                <div class="form-group">
+                    <label>Cardholder Name</label>
+                    <input type="text" class="form-input" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" class="form-input" placeholder="•••• •••• •••• ••••" required>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Expiration Date</label>
+                        <input type="text" class="form-input" placeholder="MM/YY" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" class="form-input" placeholder="•••" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-pay">Pay USD 59.99</button>
+            </form>
+            <div class="secure-footer">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                SSL Encrypted & Secure Transaction
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
