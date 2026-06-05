@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - Enter Payment Information</title>
+    <!-- لود فونت‌های مچ شده با هویت بصری آرگوس -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #03030c;
+            /* لود بکگراند تیره و باکیفیت یکپارچه سیستم آرگوس */
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/0F7F9301-6C76-4FFE-8283-3FC397A104E3.png?raw=true');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- هدر کپسولی یکدست و اختصاصی آرگوس --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* --- استپ‌بار مراحل خرید (Step Progress Bar) --- */
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin: 40px auto 10px auto;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* مرحله فعال (Payment Information) طبق تصویر */
+        .step.active {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .step.active .step-num {
+            background: #6366f1;
+            color: #ffffff;
+            border-color: #6366f1;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+        }
+
+        .step-line {
+            width: 40px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* عنوان اصلی صفحه */
+        .page-title {
+            text-align: center;
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        /* --- گرید و ساختار دو ستونه اصلی --- */
+        .checkout-layout {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 80px 24px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 48px;
+            align-items: start;
+        }
+
+        /* --- ستون سمت چپ: فرم‌ها --- */
+        .checkout-form-side {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .section-label {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .sub-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 8px;
+        }
+
+        /* اینپوت ایمیل */
+        .email-input-wrapper input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .email-input-wrapper input:focus {
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        /* باکس دوتایی گزینه‌های لوکیشن پرداخت */
+        .location-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .radio-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.2s, background 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* کاستوم رادیو باتن مطابق تصویر */
+        .radio-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s;
+        }
+
+        .radio-dot::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: transparent;
+            transition: background 0.2s;
+        }
+
+        /* حالت انتخاب شده پیش‌فرض */
+        .radio-box.selected {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.04);
+        }
+
+        .radio-box.selected .radio-dot {
+            border-color: #8b5cf6;
+        }
+
+        .radio-box.selected .radio-dot::after {
+            background: #8b5cf6;
+        }
+
+        /* لیست متدهای پرداخت (Visa, PayPal, Apple Pay) */
+        .payment-methods-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .method-item {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .method-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .method-item.selected {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.02);
+        }
+
+        .method-item.selected .radio-dot {
+            border-color: #8b5cf6;
+        }
+
+        .method-item.selected .radio-dot::after {
+            background: #8b5cf6;
+        }
+
+        /* استیکرها و لوگوهای تراکنش مالی سمت راست ردیف */
+        .brand-badges {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .badge-img {
+            height: 20px;
+            opacity: 0.85;
+        }
+
+        /* --- ستون سمت راست: فاکتور چسبان نئونی (Summary Card) --- */
+        .summary-card {
+            background: rgba(10, 11, 28, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* افکت غلیظ نئونی بنفش بالای فاکتور دقیقاً مانند تصویر image_7.png */
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+            filter: blur(15px);
+        }
+
+        .summary-title {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .invoice-row.discount-row {
+            color: #a78bfa; /* رنگ تخفیف بنفش مچ با تصویر */
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .total-price {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* فیلد کد تخفیف */
+        .promo-wrapper {
+            display: flex;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 6px;
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .promo-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            padding-left: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+        }
+
+        .promo-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* دکمه کپسولی سفید Continue نهایی */
+        .btn-continue {
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 16px;
+            border-radius: 100px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .btn-continue:hover {
+            opacity: 0.95;
+        }
+
+        /* پدلاک امنیت تراکنش */
+        .secure-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 32px;
+        }
+
+        /* گارانتی بازگشت وجه زیر کارت فاکتور */
+        .card-bottom-guarantee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- ریسپانسیو کامپکت تبلت و موبایل --- */
+        @media (max-width: 900px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+        @media (max-width: 520px) {
+            .location-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر لوکس کپسولی خطی آرگوس -->
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="why-argus.html">Why ArgusVpn?</a></li>
+                <li><a href="cost.html" class="active">Cost</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="partner.html">Become a partner</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- استپ‌بار ترکینگ مراحل خرید -->
+    <div class="steps-container">
+        <div class="step">
+            <span class="step-num">1</span>
+            <span>Subscription</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step active">
+            <span class="step-num">2</span>
+            <span>Payment information</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+            <span class="step-num">3</span>
+            <span>Payment</span>
+        </div>
+    </div>
+
+    <h1 class="page-title">Enter payment information</h1>
+
+    <!-- ساختار گرید اصلی تسویه حساب -->
+    <main class="checkout-layout">
+        
+        <!-- ستون سمت چپ: فیلدها و متدها -->
+        <div class="checkout-form-side">
+            
+            <!-- بخش ایمیل -->
+            <div>
+                <h2 class="section-label">Email</h2>
+                <div class="email-input-wrapper">
+                    <input type="email" placeholder="Enter your email" required>
+                </div>
+                <p class="sub-label">We will send the receipt to this email</p>
+            </div>
+
+            <!-- بخش لوکیشن پرداخت در سایت -->
+            <div class="location-options">
+                <div class="radio-box selected">
+                    <div class="radio-dot"></div>
+                    <span>Pay on our site</span>
+                </div>
+                <div class="radio-box">
+                    <div class="radio-dot"></div>
+                    <span>Pay on the site</span>
+                </div>
+            </div>
+            <p class="sub-label" style="margin-top: -16px;">You will be redirected to complete the payment securely.</p>
+
+            <!-- بخش انتخاب درگاه مالی پرداخت -->
+            <div>
+                <h2 class="section-label" style="margin-bottom: 20px;">Method of payment</h2>
+                <div class="payment-methods-list">
+                    
+                    <!-- درگاه ویزا / مسترکارت -->
+                    <div class="method-item selected">
+                        <div class="method-left">
+                            <div class="radio-dot"></div>
+                            <span>Visa / Mastercard</span>
+                        </div>
+                        <div class="brand-badges">
+                            <!-- لوگوهای رسمی پرداخت با ویزا و مسترکارت سبک شده -->
+                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard">
+                        </div>
+                    </div>
+
+                    <!-- درگاه پی‌پال -->
+                    <div class="method-item">
+                        <div class="method-left">
+                            <div class="radio-dot"></div>
+                            <span>PayPal</span>
+                        </div>
+                        <div class="brand-badges">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal">
+                        </div>
+                    </div>
+
+                    <!-- درگاه اپل پی -->
+                    <div class="method-item">
+                        <div class="method-left">
+                            <div class="radio-dot"></div>
+                            <span>Apple Pay</span>
+                        </div>
+                        <div class="brand-badges">
+                            <!-- لوگو مونوکروم رسمی اپل پی -->
+                            <img class="badge-img" src="https://img.icons8.com/ios-filled/50/ffffff/apple-pay.png" alt="Apple Pay">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ستون سمت راست: کارت فاکتور کل فیش (Invoice Summary) -->
+        <div>
+            <div class="summary-card">
+                <div class="summary-title">Subscription</div>
+                <div class="plan-header">
+                    <!-- آیکون تاج لایه پریمیوم پلن ۱۲ ماهه شما -->
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"></path>
+                        <path d="M3 20h18v2H3z"></path>
+                    </svg>
+                    <span>12-month subscription</span>
+                </div>
+
+                <div class="invoice-row">
+                    <span>Price</span>
+                    <span>USD 69.99</span>
+                </div>
+
+                <div class="invoice-row discount-row">
+                    <span>Discount</span>
+                    <span>- USD 10.00</span>
+                </div>
+
+                <div class="total-row">
+                    <span>Total</span>
+                    <span class="total-price">USD 59.99</span>
+                </div>
+
+                <!-- اینپوت ثبت پروموکد تخفیف -->
+                <div class="promo-wrapper">
+                    <input type="text" placeholder="Promo code">
+                    <button type="button" class="promo-btn">Apply</button>
+                </div>
+
+                <!-- دکمه نهایی اتصال به درگاه بانک -->
+                <button type="button" class="btn-continue">Continue</button>
+
+                <!-- نوتیس رمزنگاری امن تحت پروتکل شبکه -->
+                <div class="secure-notice">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Secure and encrypted payment</span>
+                </div>
+            </div>
+
+            <!-- بخش تضمین بازگشت وجه پایین باکس -->
+            <div class="card-bottom-guarantee" style="margin-top: 24px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>30-day money-back guarantee</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- جاوا اسکریپت ساده جهت فعال بودن سوئیچ رادیوباکس‌ها به سلیقه کاربر -->
+    <script>
+        document.querySelectorAll('.location-options .radio-box').forEach(box => {
+            box.addEventListener('click', function() {
+                document.querySelectorAll('.location-options .radio-box').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        document.querySelectorAll('.payment-methods-list .method-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.payment-methods-list .method-item').forEach(i => i.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
