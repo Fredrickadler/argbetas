@@ -3,90 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARGUSVPN - Finalize Payment</title>
+    <title>ARGUSVPN - Payment Successfully</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body {
-            background-color: #03030c;
-            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/0F7F9301-6C76-4FFE-8283-3FC397A104E3.png?raw=true');
-            background-size: cover; background-position: center top; background-repeat: no-repeat;
-            color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
         }
-        header { width: 100%; max-width: 1200px; margin: 24px auto 0 auto; padding: 0 16px; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; padding: 10px 24px; backdrop-filter: blur(20px); height: 54px; }
-        .logo { font-family: 'Audiowide', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 2px; color: #ffffff; text-decoration: none; }
-        
-        /* Progress Steps */
-        .steps-container { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 40px auto 10px auto; font-size: 14px; color: rgba(255, 255, 255, 0.35); }
-        .step { display: flex; align-items: center; gap: 8px; }
-        .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .step.active { color: #ffffff; font-weight: 600; }
-        .step.active .step-num { background: #6366f1; color: #ffffff; border-color: #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.5); }
-        .step-line { width: 40px; height: 1px; background: rgba(255, 255, 255, 0.1); }
 
-        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
-        .payment-card { background: rgba(10, 11, 28, 0.65); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 28px; width: 100%; max-width: 460px; padding: 40px; backdrop-filter: blur(20px); box-shadow: 0 25px 60px rgba(0,0,0,0.5); position: relative; }
-        .payment-card::before { content: ''; position: absolute; top: 0; left: 20%; width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), transparent); }
-        
-        .card-title { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 28px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); margin-bottom: 8px; }
-        .form-input { width: 100%; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 16px; color: #ffffff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
-        .form-input:focus { border-color: rgba(99, 102, 241, 0.5); }
-        
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .btn-pay { width: 100%; background: #ffffff; color: #000000; border: none; padding: 16px; border-radius: 100px; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; margin-top: 12px; }
-        .btn-pay:hover { opacity: 0.95; }
-        .secure-footer { text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.35); margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        body {
+            background-color: #05060f; /* رنگ تیره و عمیق هماهنگ با تمام صفحات */
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- هدر کپسولی خطی اصلی آرگوس (بدون تغییر) --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links .active {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- استایل پله‌های وضعیت خرید (مرحله ۳ فعال است) --- */
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin: 40px auto 40px auto;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step.active {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .step.active .step-num {
+            border-color: transparent;
+            background-color: #8b5cf6; /* رنگ بنفش دایره ۳ در تصویر */
+            color: #ffffff;
+        }
+
+        .steps-divider {
+            width: 40px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- باکس مرکزی موفقیت‌آمیز بودن پرداخت --- */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 16px 80px 16px;
+        }
+
+        .success-card {
+            background: rgba(10, 11, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            width: 100%;
+            max-width: 480px;
+            padding: 60px 40px 50px 40px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* افکت نئونی دایره‌ای بنفش رنگ بالای تیک مطابق تصویر */
+        .success-card::before {
+            content: '';
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, transparent 70%);
+            filter: blur(20px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* آیکون دایره‌ای تیک ضربان‌دار */
+        .success-icon-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 64px;
+            height: 64px;
+            background: #090a14;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px auto;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .check-svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #a78bfa; /* رنگ بنفش ملایم تیک */
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .success-message {
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 280px;
+            margin: 0 auto 40px auto;
+        }
+
+        .card-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin-bottom: 32px;
+        }
+
+        .scan-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .scan-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 28px;
+        }
+
+        /* استایل اختصاصی بارکد QR */
+        .qr-container {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 20px;
+            width: 190px;
+            height: 190px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .qr-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* --- بهینه‌سازی واکنش‌گرا --- */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- هدر کپسولی اختصاصی خطی سایت شما -->
     <header>
-        <nav class="navbar"><a href="index.html" class="logo">ARGUSVPN</a></nav>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Why ArgusVpn?</a></li>
+                <li><a href="cost.html">Cost</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Become a partner</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
+            </div>
+        </nav>
     </header>
 
-    <!-- پیشروی به مرحله ۳ -->
+    <!-- استپ‌بار ترکینگ خرید با فعال بودن استپ ۳ متناسب با عکس ارسالی شما -->
     <div class="steps-container">
-        <div class="step"><span class="step-num">1</span><span>Subscription</span></div>
-        <div class="step-line"></div>
-        <div class="step"><span class="step-num">2</span><span>Payment information</span></div>
-        <div class="step-line"></div>
-        <div class="step active"><span class="step-num">3</span><span>Payment</span></div>
+        <div class="step">
+            <span class="step-num">1</span> Subscription
+        </div>
+        <div class="steps-divider"></div>
+        <div class="step">
+            <span class="step-num">2</span> Payment information
+        </div>
+        <div class="steps-divider"></div>
+        <div class="step active">
+            <span class="step-num">3</span> Payment
+        </div>
     </div>
 
+    <!-- بخش کارت اصلی نتیجه تراکنش -->
     <main>
-        <div class="payment-card">
-            <h2 class="card-title">Credit Card Payment</h2>
-            <form onsubmit="event.preventDefault(); alert('Payment Successful! Welcome to ARGUSVPN.');">
-                <div class="form-group">
-                    <label>Cardholder Name</label>
-                    <input type="text" class="form-input" placeholder="John Doe" required>
-                </div>
-                <div class="form-group">
-                    <label>Card Number</label>
-                    <input type="text" class="form-input" placeholder="•••• •••• •••• ••••" required>
-                </div>
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Expiration Date</label>
-                        <input type="text" class="form-input" placeholder="MM/YY" required>
-                    </div>
-                    <div class="form-group">
-                        <label>CVV</label>
-                        <input type="password" class="form-input" placeholder="•••" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn-pay">Pay USD 59.99</button>
-            </form>
-            <div class="secure-footer">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                SSL Encrypted & Secure Transaction
+        <div class="success-card">
+            
+            <!-- دایره و تیک بنفش رنگ -->
+            <div class="success-icon-wrapper">
+                <svg class="check-svg" viewBox="0 0 24 24">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
             </div>
+
+            <h1 class="success-title">Successfully</h1>
+            <p class="success-message">Your payment has been processed successfully.</p>
+
+            <div class="card-divider"></div>
+
+            <h2 class="scan-title">Scan QR</h2>
+            <p class="scan-subtitle">To use VPN</p>
+
+            <!-- باکس حاوی کد ساختار QR هماهنگ با تصویر دوم -->
+            <div class="qr-container">
+                <!-- تصویر QR به صورت نمونه سفید و مشکی استاندارد قرار داده شده است -->
+                <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=ArgusVPN_Success_Auth_Token" alt="VPN QR Code">
+            </div>
+
         </div>
     </main>
 
