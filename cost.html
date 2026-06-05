@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - Choose Your Security Tariff</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #05060f; /* رنگ تیره و عمیق پس‌زمینه تصویر دوم */
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- هدر یکدست و کپسولی هماهنگ با صفحه اصلی --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links .active {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- استایل پله‌های وضعیت خرید (Steps Indicator) --- */
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin: 40px auto 20px auto;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step.active {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+        }
+
+        .step.active .step-num {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .steps-divider {
+            width: 40px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* --- بخش محتوای اصلی تع those قیمت‌ها --- */
+        .cost-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 16px 80px 16px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .cost-title {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .badge-free {
+            color: #d2fc00; /* رنگ زرد متمایل به فسفری تصویر */
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 48px;
+        }
+
+        /* گرید کارت‌ها */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: stretch;
+            margin-top: 20px;
+        }
+
+        /* استایل پایه کارت‌ها */
+        .price-card {
+            background: rgba(10, 11, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 32px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* افکت گلو بنفش بالا برای کارت‌های فرعی */
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #6b21a8, transparent);
+            filter: blur(4px);
+        }
+
+        /* استایل اختصاصی کارت ویژه (وسطی ۱۲ ماهه) */
+        .price-card.featured {
+            background: #1145ff; /* رنگ آبی یکدست و غلیظ تصویر */
+            border-color: transparent;
+            box-shadow: 0 20px 40px rgba(17, 69, 255, 0.25);
+        }
+
+        .price-card.featured::before {
+            display: none;
+        }
+
+        /* جزئیات متنی داخل کارت‌ها */
+        .plan-duration {
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .price-amount {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .price-currency {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .price-period {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* دایره‌ها و پاپ‌آپ‌های تخفیف */
+        .discount-badge {
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: auto;
+            align-self: center;
+        }
+
+        .discount-badge.blue-tag {
+            background-color: #1d4ed8;
+            color: #ffffff;
+        }
+
+        /* ویژگی‌ها (Features) */
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+        }
+
+        /* تیک چک‌باکس با استفاده از SVG برای تمیزی کار */
+        .check-icon {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .card-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            min-height: 66px; /* هماهنگ کردن ارتفاع متن توصیف در دسکتاپ */
+        }
+
+        .price-card.featured .card-description,
+        .price-card.featured .plan-duration,
+        .price-card.featured .price-period {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .divider-line {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 32px;
+        }
+
+        /* دکمه‌های ادامه خرید کارت‌ها */
+        .btn-continue {
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            text-align: center;
+            padding: 14px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .btn-continue:hover {
+            opacity: 0.95;
+        }
+
+        .card-guarantee {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .price-card.featured .card-guarantee {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* --- ریسپانسیو و مدیریت خط صاف هدر در موبایل --- */
+        @media (max-width: 960px) {
+            .cards-grid {
+                grid-template-columns: 1fr; /* کارت‌ها در موبایل زیر هم می‌روند */
+                gap: 32px;
+                max-width: 450px;
+                margin: 20px auto 0 auto;
+            }
+            .card-description {
+                min-height: auto;
+            }
+            .nav-links {
+                display: none; /* هدر کاملاً تخت و فشرده بدون تغییر شکل کپسول اصلی */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Why ArgusVpn?</a></li>
+                <li><a href="cost.html" class="active">Cost</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Become a partner</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="#" class="login-btn">Login</a>
+                <a href="#" class="cta-btn-nav">Install ArgusVPN</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="steps-container">
+        <div class="step active">
+            <span class="step-num">1</span> Choose plan
+        </div>
+        <div class="steps-divider"></div>
+        <div class="step">
+            <span class="step-num">2</span> Payment Information
+        </div>
+        <div class="steps-divider"></div>
+        <div class="step">
+            <span class="step-num">3</span> Success
+        </div>
+    </div>
+
+    <main class="cost-section">
+        <h1 class="cost-title">Choose your security tariff</h1>
+        <p class="badge-free">3 months free</p>
+
+        <div class="cards-grid">
+            
+            <div class="price-card">
+                <div>
+                    <p class="plan-duration">1 Month</p>
+                    <div class="price-row">
+                        <span class="price-amount">4.99</span>
+                        <span class="price-currency">$</span>
+                        <span class="price-period">/mo</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg class="check-icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                        No-logs & leak protection
+                    </div>
+                    <div class="divider-line"></div>
+                    <p class="card-description">For a short online journey, a month-to-month plan gives you full VPN power with total flexibility.</p>
+                </div>
+                <div>
+                    <a href="#" class="btn-continue">Continue</a>
+                    <p class="card-guarantee">30-day money-back guarantee</p>
+                </div>
+            </div>
+
+            <div class="price-card featured">
+                <div>
+                    <p class="plan-duration">12 Months</p>
+                    <div class="price-row">
+                        <span class="price-amount">12.44</span>
+                        <span class="price-currency">$</span>
+                        <span class="price-period">/mo</span>
+                        <span class="discount-badge">-50%</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg class="check-icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                        No-logs & leak protection
+                    </div>
+                    <div class="divider-line"></div>
+                    <p class="card-description">Our 12-month program offers maximum VPN security at the best value. Ideal for maintaining your privacy year-round.</p>
+                </div>
+                <div>
+                    <a href="#" class="btn-continue">Continue</a>
+                    <p class="card-guarantee">30-day money-back guarantee</p>
+                </div>
+            </div>
+
+            <div class="price-card">
+                <div>
+                    <p class="plan-duration">6 Months</p>
+                    <div class="price-row">
+                        <span class="price-amount">5.75</span>
+                        <span class="price-currency">$</span>
+                        <span class="price-period">/mo</span>
+                        <span class="discount-badge blue-tag">-40%</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg class="check-icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                        No-logs & leak protection
+                    </div>
+                    <div class="divider-line"></div>
+                    <p class="card-description">Get 6 full months of strong and secure VPN protection. Enjoy more privacy, higher speeds, and a safer online experience.</p>
+                </div>
+                <div>
+                    <a href="#" class="btn-continue">Continue</a>
+                    <p class="card-guarantee">30-day money-back guarantee</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
