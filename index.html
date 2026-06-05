@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - VPN That Simply Works</title>
+    <!-- استفاده از یک فونت سنس‌سریف مدرن نزدیک به طرح شما -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ریست کردن استایل‌های پیش‌فرض */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* استایل هدر (ناوبری) */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #aaaaaa;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .cta-btn-nav:hover {
+            opacity: 0.9;
+        }
+
+        /* بخش اصلی (Hero Section) */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px 80px 20px;
+        }
+
+        /* عنوان بزرگ ARGUS با فاصله‌گذاری حروف */
+        .brand-title {
+            font-size: clamp(48px, 8vw, 110px);
+            font-weight: 300;
+            letter-spacing: clamp(15px, 4vw, 55px);
+            /* برای جبران فاصله آخرین حرف در راست‌چین شدن */
+            text-indent: clamp(15px, 4vw, 55px); 
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .cta-btn-main {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 16px 48px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            margin-bottom: 18px;
+        }
+
+        .cta-btn-main:hover {
+            transform: scale(1.02);
+            opacity: 0.95;
+        }
+
+        .guarantee {
+            font-size: 12px;
+            color: #666666;
+            letter-spacing: 0.5px;
+        }
+
+        /* واکنش‌گرایی برای موبایل */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none; /* در نسخه‌های بعدی می‌توانید منوی همبرگری اضافه کنید */
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-actions .login-btn, .nav-actions .lang-selector {
+                display: none;
+            }
+            .navbar {
+                padding: 8px 16px;
+            }
+            .brand-title {
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="#">Why ArgusVpn?</a></li>
+                <li><a href="#">Cost</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Become a partner</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="#" class="login-btn">Login</a>
+                <a href="#" class="cta-btn-nav">Instal ArgusVPN</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="brand-title">Argus</h1>
+        <p class="subtitle">VPN THAT SIMPLY WORKS</p>
+        <a href="#" class="cta-btn-main">Instal ArgusVPN</a>
+        <p class="guarantee">30-days money back guarantee</p>
+    </main>
+
+</body>
+</html>
