@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARGUSVPN - Login</title>
+    <title>ARGUSVPN - Sign In</title>
+    <!-- لود فونت‌های اختصاصی پروژه آرگوس -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- کتابخانه‌های مورد نیاز: سوپابیس و اسکریپت وان‌تپ گوگل -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
     <style>
         * {
             margin: 0;
@@ -21,7 +18,12 @@
         }
 
         body {
-            background-color: #05060f; /* رنگ تیره و عمیق امضای آرگوس */
+            background-color: #03030c;
+            /* تغییر به یک پس‌زمینه جدید، تاریک و نئونی مواج برای افزایش جذابیت بصری فرم ورود */
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/480ECE8D-4F14-48BA-AFC4-F118606D15BC.png?raw=true');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -29,12 +31,14 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* --- هدر کپسولی خطی همیشگی آرگوس --- */
+        /* --- هدر کپسولی یکدست سیستم آرگوس --- */
         header {
             width: 100%;
             max-width: 1200px;
             margin: 24px auto 0 auto;
             padding: 0 16px;
+            position: relative;
+            z-index: 10;
         }
 
         .navbar {
@@ -57,12 +61,13 @@
             letter-spacing: 2px;
             color: #ffffff;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 18px;
             align-items: center;
         }
 
@@ -71,9 +76,10 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 500;
+            transition: color 0.2s ease;
         }
 
-        .nav-links a:hover, .nav-links .active {
+        .nav-links a:hover {
             color: #ffffff;
         }
 
@@ -81,6 +87,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            flex-shrink: 0;
         }
 
         .lang-selector {
@@ -94,6 +101,13 @@
             cursor: pointer;
         }
 
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
         .cta-btn-nav {
             background-color: #ffffff;
             color: #000000;
@@ -102,189 +116,312 @@
             border-radius: 100px;
             font-size: 12px;
             font-weight: 600;
+            white-space: nowrap;
         }
 
-        /* --- باکس لاگین شیشه‌ای وسط صفحه --- */
+        /* --- بخش اصلی کارت ورود پیشرفته --- */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 16px;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
         }
 
         .login-card {
-            background: rgba(10, 11, 26, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(6, 7, 18, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 32px;
-            width: 100%;
-            max-width: 420px;
-            padding: 48px 32px;
-            text-align: center;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 44px 40px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5),
+                        inset -15px -15px 40px rgba(99, 102, 241, 0.08); /* هاله بنفش ملایم داخلی */
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        /* افکت گلو فوق‌العاده زیبای بنفش آرگوس در بالای کارت */
+        /* خط نئونی شارپ بالای کارت لاگین */
         .login-card::before {
             content: '';
             position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
-            filter: blur(15px);
-            pointer-events: none;
+            top: 0;
+            left: 20%;
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
         }
 
-        .login-title {
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-header h1 {
             font-size: 28px;
             font-weight: 700;
-            margin-bottom: 8px;
             letter-spacing: -0.5px;
+            margin-bottom: 6px;
         }
 
-        .login-subtitle {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.45);
-            margin-bottom: 38px;
+        .login-header p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        .btn-group {
+        /* دکمه‌های ورود سریع با هویت‌های اصلی (Google & Apple) */
+        .social-login-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .btn-social {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        /* استایل دکمه‌های شیشه‌ای ورود سریع */
-        .login-btn-oauth {
-            width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 16px;
             color: #ffffff;
-            padding: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.1s;
+        }
+
+        .btn-social:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* خط جداکننده امضا دار متنی */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .divider:not(:empty)::before { margin-right: .75em; }
+        .divider:not(:empty)::after { margin-left: .75em; }
+
+        /* استایل فرم و اینپوت‌های سایبرپانکی */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 14px 18px;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+
+        /* گزینه‌ها */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 32px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: #ffffff;
+        }
+
+        .forgot-link {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: #ffffff;
+        }
+
+        /* دکمه نهایی کپسولی متالیک */
+        .btn-submit {
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 15px;
             border-radius: 100px;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: background 0.2s, border-color 0.2s;
+            transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s;
+            margin-bottom: 24px;
         }
 
-        .login-btn-oauth:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+        .btn-submit:hover {
+            transform: scale(1.01);
+            opacity: 0.95;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
         }
 
-        /* مات کردن دکمه آیفون برای نشان دادن غیرفعال بودن دکمه */
-        .login-btn-oauth.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .card-footer {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        .oauth-icon {
-            width: 18px;
-            height: 18px;
+        .card-footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        .notice-text {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.35);
-            margin-top: 32px;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
+        /* ریسپانسیو موبایل */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .login-card {
+                padding: 36px 24px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- هدر کپسولی یکپارچه آرگوس -->
     <header>
         <nav class="navbar">
             <a href="index.html" class="logo">ARGUSVPN</a>
+            
             <ul class="nav-links">
-                <li><a href="index.html">Why ArgusVpn?</a></li>
+                <li><a href="why-argus.html">Why ArgusVpn?</a></li>
                 <li><a href="cost.html">Cost</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Become a partner</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="partner.html">Become a partner</a></li>
+                <li><a href="blog.html">Blog</a></li>
             </ul>
+            
             <div class="nav-actions">
                 <button class="lang-selector">EN</button>
+                <a href="login.html" class="login-btn" style="color: #ffffff; font-weight:600;">Login</a>
                 <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
             </div>
         </nav>
     </header>
 
+    <!-- مرکز صفحه: کارت ورود ارتقایافته -->
     <main>
-        <div class="login-card">
-            <h1 class="login-title">Welcome back</h1>
-            <p class="login-subtitle">Sign in to manage your secure connection</p>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Welcome back</h1>
+                    <p>Choose your preferred way to log in</p>
+                </div>
 
-            <div class="btn-group">
-                <!-- دکمه فعال گوگل -->
-                <button class="login-btn-oauth" onclick="loginWithGoogle()">
-                    <img class="oauth-icon" src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
-                    <span>Continue with Google</span>
-                </button>
+                <!-- پیاده‌سازی دکمه‌های مستقیم و رسمی گوگل و اپل -->
+                <div class="social-login-grid">
+                    <!-- دکمه ورود گوگل همراه با لوگوی SVG اورجینال -->
+                    <button class="btn-social">
+                        <svg width="16" height="16" viewBox="0 0 24 24">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                        Google
+                    </button>
+                    
+                    <!-- دکمه ورود اپل همراه با لوگوی SVG اورجینال -->
+                    <button class="btn-social">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.21.67-2.93 1.49-.62.69-1.16 1.84-1.01 2.96 1.12.09 2.27-.56 2.95-1.39z"/>
+                        </svg>
+                        Apple
+                    </button>
+                </div>
 
-                <!-- دکمه نمایشی آیفون (طبق خواسته شما کار نمیکنه) -->
-                <button class="login-btn-oauth disabled" onclick="alert('Apple Sign-In is temporarily unavailable.')">
-                    <img class="oauth-icon" src="https://img.icons8.com/ios-filled/50/ffffff/mac-os.png" alt="Apple">
-                    <span>Continue with Apple</span>
-                </button>
+                <div class="divider">or continue with email</div>
+
+                <!-- فیلدهای فرم ایمیل اختصاصی -->
+                <form action="#" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" placeholder="name@example.com" required autocomplete="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Sign In</button>
+                </form>
+
+                <div class="card-footer">
+                    Don't have an account? <a href="cost.html">Get ArgusVPN</a>
+                </div>
             </div>
-
-            <p class="notice-text">By continuing, you agree to ArgusVPN's Terms of Service and Privacy Policy.</p>
         </div>
     </main>
-
-    <script>
-        // ۱. اطلاعات سوپابیس خودت را اینجا بذار
-        const supabaseUrl = 'https://your-project-id.supabase.co'; 
-        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        // روش اول: ورود با کلیک روی دکمه گوگل (Google OAuth)
-        async function loginWithGoogle() {
-            const { data, error } = await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: window.location.origin + '/cost.html' // بعد از لاگین بره به صفحه قیمت‌ها
-                }
-            });
-            if (error) console.error('Login Error:', error.message);
-        }
-
-        // روش دوم: وان‌تپ گوگل (One Tap) پاپ‌آپ خودکار بدون کلیک
-        function handleCredentialResponse(response) {
-            supabase.auth.signInWithIdToken({
-                provider: 'google',
-                token: response.credential
-            }).then(({ data, error }) => {
-                if (!error) window.location.href = '/cost.html';
-            });
-        }
-
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com", // کلاینت آی‌دی گوگل رو اینجا بذار
-                callback: handleCredentialResponse
-            });
-            google.accounts.id.prompt(); // نمایش خودکار پاپ‌آپ وان‌تپ گوگل در گوشه صفحه
-        }
-    </script>
 
 </body>
 </html>
