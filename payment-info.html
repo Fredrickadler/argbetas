@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ARGUSVPN - Payment Information</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- اضافه شدن کتابخانه رسمی سابابیس -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         * {
             margin: 0;
@@ -23,6 +26,7 @@
             display: flex;
             flex-direction: column;
             font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden; /* جلوگیری کامل از تکان خوردن افقی صفحه */
         }
 
         /* --- هدر کپسولی خطی یکپارچه آرگوس --- */
@@ -102,21 +106,25 @@
             font-weight: 600;
         }
 
-        /* --- استپ‌بار ترکینگ مراحل خرید --- */
+        /* --- استپ‌بار ترکینگ مراحل خرید (کاملاً بهینه‌سازی شده) --- */
         .steps-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 24px;
+            gap: 16px;
             margin: 40px auto 20px auto;
             font-size: 14px;
             color: rgba(255, 255, 255, 0.6);
+            width: 100%;
+            max-width: 480px;
+            padding: 0 16px;
         }
 
         .step {
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
 
         .step.active {
@@ -128,30 +136,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.4);
             font-size: 12px;
+            flex-shrink: 0;
         }
 
         .step.active .step-num {
-            border-color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #8b5cf6;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
         }
 
         .steps-divider {
-            width: 40px;
+            flex: 1;
+            max-width: 50px;
             height: 1px;
             background-color: rgba(255, 255, 255, 0.15);
         }
 
         .page-title {
             text-align: center;
-            font-size: clamp(26px, 4vw, 38px);
+            font-size: clamp(24px, 4vw, 38px);
             font-weight: 700;
             margin-bottom: 40px;
             letter-spacing: -0.5px;
+            padding: 0 16px;
         }
 
         /* --- ساختار دو ستونه اصلی تسویه حساب --- */
@@ -297,7 +310,6 @@
             background: #8b5cf6;
         }
 
-        /* --- گروه مینی دکمه‌های شیک لوگوی کوین‌ها بدون متن اضافی --- */
         .crypto-logos-group {
             display: flex;
             gap: 8px;
@@ -490,6 +502,7 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        /* --- مدیا کوئری‌های ریسپانسیو و رفع کامل باگ موبایل --- */
         @media (max-width: 900px) {
             .checkout-layout {
                 grid-template-columns: 1fr;
@@ -499,9 +512,38 @@
                 display: none;
             }
         }
-        @media (max-width: 520px) {
+
+        @media (max-width: 480px) {
+            /* استایل بهینه‌سازی شده استپ‌بار در موبایل برای حذف لرزش و بیرون‌زدگی */
+            .steps-container {
+                gap: 8px;
+            }
+            .step {
+                font-size: 0; /* مخفی کردن متن مراحل در موبایل برای حفظ فضا */
+            }
+            .step::after {
+                content: attr(title); /* استفاده از عنوان کوتاه جایگزین */
+                font-size: 12px;
+            }
+            .steps-divider {
+                max-width: 30px;
+            }
             .location-options {
                 grid-template-columns: 1fr;
+            }
+            .method-item {
+                padding: 14px 12px;
+            }
+            .crypto-logos-group {
+                gap: 4px;
+            }
+            .coin-mini-btn {
+                width: 28px;
+                height: 28px;
+            }
+            .coin-mini-btn svg {
+                width: 15px;
+                height: 15px;
             }
         }
     </style>
@@ -526,24 +568,24 @@
         </nav>
     </header>
 
+    <!-- اضافه شدن اتریبیوت title برای ریسپانسیو فوق‌العاده در موبایل -->
     <div class="steps-container">
-        <div class="step">
-            <span class="step-num">1</span> Choose plan
+        <div class="step" title="Plan">
+            <span class="step-num">1</span>
         </div>
         <div class="steps-divider"></div>
-        <div class="step active">
-            <span class="step-num">2</span> Payment Information
+        <div class="step active" title="Payment">
+            <span class="step-num">2</span>
         </div>
         <div class="steps-divider"></div>
-        <div class="step">
-            <span class="step-num">3</span> Success
+        <div class="step" title="Success">
+            <span class="step-num">3</span>
         </div>
     </div>
 
     <h1 class="page-title">Enter payment information</h1>
 
     <main class="checkout-layout">
-        
         <div class="checkout-form-side">
             <div>
                 <h2 class="section-label">Email</h2>
@@ -589,7 +631,6 @@
                         </div>
                     </div>
 
-                    <!-- ردیف کاملاً اورجینال کریپتو، کاملاً هم‌اندازه با بقیه دکمه‌ها همراه با ۳ دکمه دایره‌ای SVG تمیز -->
                     <div class="method-item" id="crypto-main-item">
                         <div class="method-left">
                             <div class="radio-dot"></div>
@@ -597,7 +638,6 @@
                         </div>
                         
                         <div class="crypto-logos-group">
-                            <!-- دکمه ترون با SVG وکتور رسمی و دقیق -->
                             <div class="coin-mini-btn active" data-coin="trx" title="TRX">
                                 <svg viewBox="0 0 24 24" fill="none">
                                     <path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z" fill="#EF002F"/>
@@ -605,7 +645,6 @@
                                     <path d="M17.25 9l-5.25 8.25V9l5.25 0z" fill="rgba(255,255,255,0.6)"/>
                                 </svg>
                             </div>
-                            <!-- دکمه بایننس با SVG وکتور رسمی و تمیز -->
                             <div class="coin-mini-btn" data-coin="bnbbsc" title="BNB">
                                 <svg viewBox="0 0 24 24" fill="none">
                                     <path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z" fill="#F3BA2F"/>
@@ -613,7 +652,6 @@
                                     <path d="M12 11.25l1.5 1.5-1.5 1.5-1.5-1.5 1.5-1.5z" fill="#FFF"/>
                                 </svg>
                             </div>
-                            <!-- دکمه اتریوم (بیس) با SVG وکتور رسمی و باکیفیت هندسی -->
                             <div class="coin-mini-btn" data-coin="ethbase" title="Base (ETH)">
                                 <svg viewBox="0 0 24 24" fill="none">
                                     <path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z" fill="#0052FF"/>
@@ -655,8 +693,8 @@
                 </div>
 
                 <div class="promo-wrapper">
-                    <input type="text" placeholder="Promo code">
-                    <button type="button" class="promo-btn">Apply</button>
+                    <input type="text" id="promo-input" placeholder="Promo code">
+                    <button type="button" class="promo-btn" onclick="applyPromoCode()">Apply</button>
                 </div>
 
                 <button type="button" id="submit-pay-btn" class="btn-continue-checkout" onclick="processPayment()">Continue</button>
@@ -680,6 +718,7 @@
     </main>
 
     <script>
+        // کدهای پایه‌ای و رفتاری UI (تا گام بعدی که به دیتابیس متصلش کنیم)
         document.querySelectorAll('.location-options .radio-box').forEach(box => {
             box.addEventListener('click', function() {
                 document.querySelectorAll('.location-options .radio-box').forEach(b => b.classList.remove('selected'));
@@ -709,7 +748,7 @@
         });
 
         const savedPlanName = localStorage.getItem('selected_plan_name') || '12 Months Plan';
-        const savedTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '149.28');
+        let savedTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '74.64');
         const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; 
 
         let basePrice = savedTotalPrice;
@@ -728,57 +767,14 @@
         document.getElementById('discount-display').innerText = '- USD ' + discountPrice.toFixed(2);
         document.getElementById('total-price-display').innerText = 'USD ' + savedTotalPrice.toFixed(2);
 
+        function applyPromoCode() {
+            // این تابع در بخش بعدی به Supabase متصل خواهد شد
+            alert("Promo system ready to sync with Supabase!");
+        }
+
         async function processPayment() {
-            const emailInput = document.getElementById('user-email').value;
-            if(!emailInput || !emailInput.includes('@')) {
-                alert("Please enter a valid email address.");
-                return;
-            }
-
-            const selectedMethod = document.querySelector('.payment-methods-list .method-item.selected');
-            
-            if (selectedMethod && selectedMethod.id === 'crypto-main-item') {
-                const payBtn = document.getElementById('submit-pay-btn');
-                payBtn.innerText = `Connecting ${selectedCryptoCoin.toUpperCase()} Gateway...`;
-                payBtn.disabled = true;
-
-                const uniqueOrderId = 'ARGUS-' + Date.now();
-
-                try {
-                    const response = await fetch('https://api.nowpayments.io/v1/invoice', {
-                        method: 'POST',
-                        headers: {
-                            'x-api-key': apiKey,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            price_amount: savedTotalPrice,
-                            price_currency: "usd",
-                            pay_currency: selectedCryptoCoin, 
-                            order_id: uniqueOrderId,
-                            order_description: "ARGUSVPN: " + savedPlanName,
-                            success_url: window.location.origin + '/success.html',
-                            cancel_url: window.location.href
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data && data.invoice_url) {
-                        window.location.href = data.invoice_url; 
-                    } else {
-                        alert("Could not load payment gateway. Try again.");
-                        payBtn.innerText = "Continue";
-                        payBtn.disabled = false;
-                    }
-                } catch (error) {
-                    alert("Gateway connection timeout.");
-                    payBtn.innerText = "Continue";
-                    payBtn.disabled = false;
-                }
-            } else {
-                window.location.href = 'success.html';
-            }
+            // این تابع در بخش بعدی تراکنش را در سابابیس ثبت خواهد کرد
+            window.location.href = 'success.html';
         }
     </script>
 </body>
