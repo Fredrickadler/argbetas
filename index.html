@@ -18,8 +18,8 @@
 
         body {
             background-color: #000000;
-            /* ست شدن تصویر پس‌زمینه ارسالی شما */
-            background-image: url('https://i.imgur.com/dbJo37V_d.webp?maxwidth=1520&fidelity=grand');
+            /* مسیر نسبی هماهنگ با ساختار گیت‌هاب که بالاتر توضیح داده شد */
+            background-image: url('assets/images/background.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -30,7 +30,7 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* استایل ناوبری (هدر) */
+        /* استایل هدر: تضمین کپسول تخت و خط صاف مینی‌مال روی تمام دستگاه‌ها */
         header {
             width: 100%;
             max-width: 1200px;
@@ -45,31 +45,33 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 100px;
-            padding: 12px 28px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px; /* فیکس کردن دقیق ارتفاع برای جلوگیری از کلفت شدن */
         }
 
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 16px;
-            letter-spacing: 3px;
+            font-size: 14px;
+            letter-spacing: 2px;
             color: #ffffff;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
-        /* لیست منوها */
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 24px;
+            gap: 20px;
+            align-items: center;
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.65);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             transition: color 0.2s ease;
             white-space: nowrap;
@@ -82,16 +84,17 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
+            flex-shrink: 0;
         }
 
         .lang-selector {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             border: none;
             color: #ffffff;
-            padding: 6px 14px;
+            padding: 4px 10px;
             border-radius: 50px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             font-family: 'Space Grotesk', sans-serif;
@@ -100,7 +103,7 @@
         .login-btn {
             color: #ffffff;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
         }
 
@@ -108,18 +111,19 @@
             background-color: #ffffff;
             color: #000000;
             text-decoration: none;
-            padding: 10px 24px;
+            padding: 8px 18px;
             border-radius: 100px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            transition: background-color 0.2s ease;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
         }
 
         .cta-btn-nav:hover {
-            background-color: rgba(255, 255, 255, 0.9);
+            opacity: 0.95;
         }
 
-        /* بخش هیرو اصلی */
+        /* بخش میانی صفحه (Hero Section) */
         main {
             flex: 1;
             display: flex;
@@ -130,24 +134,24 @@
             padding: 40px 20px;
         }
 
-        /* ایجاد فونت کاملاً عریض با فاصله بسیار زیاد حروف مطابق طرح شما */
+        /* تنظیم دقیق فاصله‌گذاری فوق‌العاده کشیده و عریض کلمه Argus */
         .brand-title {
             font-family: 'Syncopate', sans-serif;
-            font-size: clamp(36px, 10vw, 120px);
+            font-size: clamp(34px, 9vw, 110px);
             font-weight: 700;
-            letter-spacing: clamp(16px, 4.5vw, 65px); /* اعمال دقیق پرش و فاصله زیاد حروف */
-            text-indent: clamp(16px, 4.5vw, 65px); /* بالانس کردن تورفتگی حرف آخر */
+            letter-spacing: clamp(14px, 4.5vw, 60px);
+            text-indent: clamp(14px, 4.5vw, 60px);
             text-transform: uppercase;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             line-height: 1.1;
             color: #ffffff;
         }
 
         .subtitle {
-            font-size: clamp(16px, 2.2vw, 22px);
+            font-size: clamp(14px, 2vw, 20px);
             font-weight: 500;
             letter-spacing: 2px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             color: #ffffff;
             text-transform: uppercase;
         }
@@ -156,57 +160,50 @@
             background-color: #ffffff;
             color: #000000;
             text-decoration: none;
-            padding: 16px 48px;
+            padding: 14px 44px;
             border-radius: 100px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+            margin-bottom: 16px;
             display: inline-block;
         }
 
         .cta-btn-main:hover {
             transform: scale(1.02);
-            background-color: rgba(255, 255, 255, 0.95);
         }
 
         .guarantee {
-            font-size: 13px;
+            font-size: 12px;
             color: rgba(255, 255, 255, 0.4);
             letter-spacing: 0.5px;
         }
 
-        /* واکنش‌گرایی موبایل: منوها به هیچ وجه غیب نمی‌شوند بلکه به درستی نمایش داده می‌شوند */
-        @media (max-width: 991px) {
-            .navbar {
-                flex-direction: column;
-                gap: 20px;
-                border-radius: 24px;
-                padding: 20px;
-            }
+        /* ریسپانس فیکس: حفظ ساختار باریک هدر در صفحات کوچک بدون زیر هم چیدن لایه‌ها */
+        @media (max-width: 860px) {
             .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 16px;
+                gap: 12px;
             }
-            header {
-                margin-top: 12px;
+            .nav-links a {
+                font-size: 11px;
+            }
+            .navbar {
+                padding: 10px 16px;
             }
         }
 
-        @media (max-width: 550px) {
-            .nav-actions {
-                width: 100%;
-                justify-content: center;
-                gap: 12px;
-                flex-wrap: wrap;
+        @media (max-width: 720px) {
+            /* در موبایل‌های بسیار کوچک پیوندها برای حفظ خط صاف مخفی و دکمه اصلی و لوگو فشرده و شیک چیده می‌شوند */
+            .nav-links {
+                display: none; 
+            }
+            .logo {
+                font-size: 13px;
+                letter-spacing: 1px;
             }
             .cta-btn-nav {
-                width: 100%;
-                text-align: center;
-            }
-            .brand-title {
-                margin-bottom: 40px;
+                padding: 6px 12px;
+                font-size: 11px;
             }
         }
     </style>
