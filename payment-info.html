@@ -17,7 +17,7 @@
         }
 
         body {
-            background-color: #05060f; /* دقیقاً همان رنگ تیره و عمیق صفحه انتخاب پلن شما */
+            background-color: #05060f;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -102,7 +102,7 @@
             font-weight: 600;
         }
 
-        /* --- استپ‌بار ترکینگ مراحل خرید هماهنگ با صفحه قبل --- */
+        /* --- استپ‌بار ترکینگ مراحل خرید --- */
         .steps-container {
             display: flex;
             justify-content: center;
@@ -146,7 +146,6 @@
             background-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* عنوان اصلی صفحه */
         .page-title {
             text-align: center;
             font-size: clamp(26px, 4vw, 38px);
@@ -167,7 +166,6 @@
             align-items: start;
         }
 
-        /* ستون سمت چپ: فرم‌ها */
         .checkout-form-side {
             display: flex;
             flex-direction: column;
@@ -189,7 +187,6 @@
             text-align: left;
         }
 
-        /* اینپوت ایمیل */
         .email-input-wrapper input {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
@@ -207,7 +204,6 @@
             border-color: rgba(139, 92, 246, 0.5);
         }
 
-        /* باکس دوتایی گزینه‌های لوکیشن پرداخت */
         .location-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -229,7 +225,6 @@
             font-weight: 500;
         }
 
-        /* کاستوم رادیو باتن طرح نئون نقشه طرح شما */
         .radio-dot {
             width: 18px;
             height: 18px;
@@ -250,7 +245,6 @@
             transition: background 0.2s;
         }
 
-        /* حالت انتخاب شده پیش‌فرض */
         .radio-box.selected {
             border-color: #8b5cf6;
             background: rgba(139, 92, 246, 0.04);
@@ -264,7 +258,6 @@
             background: #8b5cf6;
         }
 
-        /* لیست متدهای پرداخت */
         .payment-methods-list {
             display: flex;
             flex-direction: column;
@@ -304,7 +297,6 @@
             background: #8b5cf6;
         }
 
-        /* لوگوهای درگاه تراکنش مالی */
         .brand-badges {
             display: flex;
             gap: 8px;
@@ -316,7 +308,7 @@
             opacity: 0.85;
         }
 
-        /* --- ستون سمت راست: فاکتور چسبان شیشه‌ای (Summary Card) --- */
+        /* --- ستون سمت راست: فاکتور چسبان شیشه‌ای --- */
         .summary-card {
             background: rgba(10, 11, 26, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -329,7 +321,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        /* افکت غلیظ نئونی بنفش بالای فاکتور دقیقاً مطابق تصویر */
         .summary-card::before {
             content: '';
             position: absolute;
@@ -390,7 +381,6 @@
             font-weight: 700;
         }
 
-        /* فیلد کد تخفیف */
         .promo-wrapper {
             display: flex;
             background: rgba(0, 0, 0, 0.25);
@@ -423,7 +413,6 @@
             cursor: pointer;
         }
 
-        /* دکمه کپسولی سفید Continue نهایی */
         .btn-continue-checkout {
             width: 100%;
             background: #ffffff;
@@ -456,7 +445,6 @@
             margin-bottom: 32px;
         }
 
-        /* گارانتی بازگشت وجه زیر کارت فاکتور */
         .card-bottom-guarantee {
             display: flex;
             align-items: center;
@@ -466,7 +454,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* --- ریسپانسیو کامپکت تبلت و موبایل --- */
         @media (max-width: 900px) {
             .checkout-layout {
                 grid-template-columns: 1fr;
@@ -499,7 +486,7 @@
             
             <div class="nav-actions">
                 <button class="lang-selector">EN</button>
-                <a href="login.html" class="login-btn">Login</a>
+                <a href="login.html" class="login-btn" style="color: white; text-decoration: none; font-size: 12px; margin-right: 10px;">Login</a>
                 <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
             </div>
         </nav>
@@ -555,8 +542,8 @@
                             <span>Visa / Mastercard</span>
                         </div>
                         <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/visa.png" alt="Visa">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard">
                         </div>
                     </div>
 
@@ -566,20 +553,19 @@
                             <span>PayPal</span>
                         </div>
                         <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/paypal.png" alt="PayPal">
                         </div>
                     </div>
 
-                    <!-- بخش ارز دیجیتال اختصاصی بدون USDT (اتریوم، ترون و بایننس کوین) -->
                     <div class="method-item">
                         <div class="method-left">
                             <div class="radio-dot"></div>
                             <span>Cryptocurrency</span>
                         </div>
                         <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/ethereum.png" alt="ETH">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/tron.png" alt="TRX">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/binance-coin.png" alt="BNB">
+                            <img class="badge-img" src="https://img.icons8.com/fluency/48/ethereum.png" alt="ETH">
+                            <img class="badge-img" src="https://img.icons8.com/fluency/48/tron.png" alt="TRX">
+                            <img class="badge-img" src="https://img.icons8.com/fluency/48/binance.png" alt="BNB">
                         </div>
                     </div>
 
@@ -655,7 +641,6 @@
             });
         });
 
-        // لود داینامیک اطلاعات
         const savedPlanName = localStorage.getItem('selected_plan_name') || '12 Months Plan';
         const savedTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '149.28');
         const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; 
@@ -685,7 +670,6 @@
 
             const selectedMethodText = document.querySelector('.payment-methods-list .method-item.selected .method-left span').innerText;
             
-            // اگر کریپتو انتخاب شده بود، فاکتور با ارزهای درخواستی شما ساخته می‌شود
             if (selectedMethodText.includes("Cryptocurrency")) {
                 const payBtn = document.getElementById('submit-pay-btn');
                 payBtn.innerText = "Connecting Gateway...";
@@ -694,7 +678,7 @@
                 const uniqueOrderId = 'ARGUS-' + Date.now();
 
                 try {
-                    // ارسال درخواست به درگاه با آپشن‌های انحصاری ETH, TRX, BNB
+                    // تصحیح کامل متد ریکوئست طبق مستندات رسمی درگاه برای ایجاد فاکتور استاندارد
                     const response = await fetch('https://api.nowpayments.io/v1/invoice', {
                         method: 'POST',
                         headers: {
@@ -704,8 +688,6 @@
                         body: JSON.stringify({
                             price_amount: savedTotalPrice,
                             price_currency: "usd",
-                            // محدود کردن درگاه به اتریوم، ترون و بایننس کوین (بیس)
-                            currencies: ["eth", "trx", "bnbbsc"], 
                             order_id: uniqueOrderId,
                             order_description: "ARGUSVPN: " + savedPlanName,
                             success_url: window.location.origin + '/success.html',
@@ -718,7 +700,7 @@
                     if (data && data.invoice_url) {
                         window.location.href = data.invoice_url; 
                     } else {
-                        alert("Could not load payment gateway. Try again.");
+                        alert("Could not load payment gateway. Please verify your API Key.");
                         payBtn.innerText = "Continue";
                         payBtn.disabled = false;
                     }
