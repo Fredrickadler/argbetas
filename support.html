@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - Welcome to Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #05060f;
+            /* لود مستقیم تصویر بکگراند گرید دار مخصوص پشتیبانی */
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/480ECE8D-4F14-48BA-AFC4-F118606D15BC.png?raw=true');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- هدر یکدست کپسولی پروژه --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links .active {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- بخش محتوای پشتیبانی (Support Content) --- */
+        .support-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 60px 24px 80px 24px;
+            text-align: center;
+        }
+
+        /* آیکون چت حباب مرکزی بالای عنوان */
+        .center-support-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e1b4b, #4c1d95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px auto;
+            box-shadow: 0 10px 30px rgba(76, 29, 149, 0.3);
+        }
+
+        .support-title {
+            font-size: clamp(28px, 4.5vw, 48px);
+            font-weight: 700;
+            margin-bottom: 48px;
+            letter-spacing: -0.5px;
+        }
+
+        /* گرید ۲ در ۲ کارت‌ها */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            text-align: left;
+        }
+
+        /* استایل اختصاصی کارت‌های فرانت کپسولی بنفش */
+        .support-card {
+            background: rgba(10, 11, 26, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        /* خط نئونی ملایم بالای هر کارت */
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 12%;
+            width: 76%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+        }
+
+        /* آیکون‌های کوچک شیشه‌ای داخل هر کارت */
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #a78bfa;
+            box-shadow: inset 0 0 12px rgba(167, 139, 250, 0.1);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        /* پکیج دکمه‌های دوتایی انتهای کارت */
+        .card-actions-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-support {
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        /* دکمه اصلی (روشن) */
+        .btn-support.primary {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .btn-support.primary:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* دکمه فرعی (تیره غلیظ) */
+        .btn-support.secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex: 1;
+        }
+
+        .btn-support.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-support.full-width {
+            width: 100%;
+        }
+
+        /* --- ریسپانسیو و بهینه‌سازی موبایل --- */
+        @media (max-width: 860px) {
+            .support-grid {
+                grid-template-columns: 1fr; /* تبدیل به حالت یک خط تک ستونی روی موبایل */
+                max-width: 480px;
+                margin: 0 auto;
+            }
+            .nav-links {
+                display: none; /* حفظ ساختار هدر صاف و مینیمال بدون افزایش ضخامت کپسول هدر */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="why-argus.html">Why ArgusVpn?</a></li>
+                <li><a href="cost.html">Cost</a></li>
+                <li><a href="support.html" class="active">Support</a></li>
+                <li><a href="partner.html">Become a partner</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="support-container">
+        <div class="center-support-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </div>
+        
+        <h1 class="support-title">Welcome to support</h1>
+
+        <div class="support-grid">
+            
+            <div class="support-card">
+                <div>
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    </div>
+                    <h2 class="card-title">Payment issues</h2>
+                    <p class="card-text">Payment Methods, Refunds, Promo Codes</p>
+                </div>
+                <div class="card-actions-row">
+                    <a href="#" class="btn-support primary">Report a problem</a>
+                    <a href="#" class="btn-support secondary">Ask a question</a>
+                </div>
+            </div>
+
+            <div class="support-card">
+                <div>
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    </div>
+                    <h2 class="card-title">Technical issues</h2>
+                    <p class="card-text">Usage or application inquiries</p>
+                </div>
+                <div class="card-actions-row">
+                    <a href="#" class="btn-support secondary full-width">Ask a question</a>
+                </div>
+            </div>
+
+            <div class="support-card">
+                <div>
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12L18 12"></path><path d="M12 6L12 18"></path><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"></polygon></svg>
+                    </div>
+                    <h2 class="card-title">Affiliate Program</h2>
+                    <p class="card-text">Commission, charging and withdrawal of funds, adverts, referral links.</p>
+                </div>
+                <div class="card-actions-row">
+                    <a href="#" class="btn-support primary">Start now</a>
+                    <a href="#" class="btn-support secondary">Ask a question</a>
+                </div>
+            </div>
+
+            <div class="support-card">
+                <div>
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .6 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line></svg>
+                    </div>
+                    <h2 class="card-title">Ideas, suggestions</h2>
+                    <p class="card-text">Any ideas or the development of the app and everything related to it</p>
+                </div>
+                <div class="card-actions-row">
+                    <a href="#" class="btn-support secondary full-width">Suggest</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
