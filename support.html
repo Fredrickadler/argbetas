@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARGUSVPN - Welcome to Support</title>
+    <!-- لود فونت‌های اختصاصی پروژه آرگوس -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -154,18 +155,22 @@
             text-align: left;
         }
 
-        /* استایل اختصاصی کارت‌های فرانت کپسولی بنفش */
+        /* استایل اختصاصی کارت‌های فرانت کپسولی بنفش همراه با هاله نئونی گوشه پایین */
         .support-card {
-            background: rgba(10, 11, 26, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(8, 9, 22, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
             padding: 32px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             position: relative;
+            overflow: hidden; /* برای جلوگیری از بیرون زدن نور پایینی کارت */
+            
+            /* ایجاد افکت سایه داخلی برای شبیه‌سازی نور ضعیف پایین سمت راست */
+            box-shadow: inset -15px -15px 35px rgba(59, 120, 255, 0.12);
         }
 
         /* خط نئونی ملایم بالای هر کارت */
@@ -177,6 +182,27 @@
             width: 76%;
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+            z-index: 2;
+        }
+
+        /* هاله نوری کاملاً اختصاصی منفجر شده در گوشه پایین سمت راست قالب مطابق با تصویر شما */
+        .support-card::after {
+            content: '';
+            position: absolute;
+            bottom: -35px;
+            right: -35px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(58, 43, 237, 0.45) 0%, rgba(58, 43, 237, 0.2) 50%, transparent 100%);
+            filter: blur(20px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* بالا آوردن محتوای کارت برای اینکه زیر نور پنهان نشوند */
+        .support-card > div {
+            position: relative;
+            z-index: 3;
         }
 
         /* آیکون‌های کوچک شیشه‌ای داخل هر کارت */
@@ -261,13 +287,14 @@
                 margin: 0 auto;
             }
             .nav-links {
-                display: none; /* حفظ ساختار هدر صاف و مینیمال بدون افزایش ضخامت کپسول هدر */
+                display: none; 
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- هدر هماهنگ با ساختار کل پروژه آرگوس -->
     <header>
         <nav class="navbar">
             <a href="index.html" class="logo">ARGUSVPN</a>
@@ -288,7 +315,9 @@
         </nav>
     </header>
 
+    <!-- محتوای صفحه پشتیبانی -->
     <main class="support-container">
+        <!-- آیکون گفتگوی مرکزی فوقانی -->
         <div class="center-support-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -299,6 +328,7 @@
 
         <div class="support-grid">
             
+            <!-- کارت اول: مشکلات پرداخت -->
             <div class="support-card">
                 <div>
                     <div class="card-icon">
@@ -313,6 +343,7 @@
                 </div>
             </div>
 
+            <!-- کارت دوم: مشکلات فنی -->
             <div class="support-card">
                 <div>
                     <div class="card-icon">
@@ -326,6 +357,7 @@
                 </div>
             </div>
 
+            <!-- کارت سوم: سیستم همکاری -->
             <div class="support-card">
                 <div>
                     <div class="card-icon">
@@ -340,6 +372,7 @@
                 </div>
             </div>
 
+            <!-- کارت چهارم: ایده‌ها و پیشنهادات -->
             <div class="support-card">
                 <div>
                     <div class="card-icon">
