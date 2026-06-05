@@ -528,7 +528,7 @@
             <div>
                 <h2 class="section-label">Email</h2>
                 <div class="email-input-wrapper">
-                    <input type="email" placeholder="Enter your email" required>
+                    <input type="email" id="user-email" placeholder="Enter your email" required>
                 </div>
                 <p class="sub-label">We will send the receipt to this email</p>
             </div>
@@ -570,13 +570,16 @@
                         </div>
                     </div>
 
+                    <!-- جایگزینی Apple Pay با متد کریپتو کامپکت بدون تغییر استایل شما -->
                     <div class="method-item">
                         <div class="method-left">
                             <div class="radio-dot"></div>
-                            <span>Apple Pay</span>
+                            <span>Cryptocurrency</span>
                         </div>
                         <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/ios-filled/50/ffffff/apple-pay.png" alt="Apple Pay">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/tether.png" alt="USDT">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/bitcoin.png" alt="BTC">
+                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/ethereum.png" alt="ETH">
                         </div>
                     </div>
 
@@ -593,22 +596,22 @@
                         <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"></path>
                         <path d="M3 20h18v2H3z"></path>
                     </svg>
-                    <span style="margin-left: 8px;">12-month subscription</span>
+                    <span id="plan-title-display" style="margin-left: 8px;">12-month subscription</span>
                 </div>
 
                 <div class="invoice-row">
                     <span>Price</span>
-                    <span>USD 149.28</span>
+                    <span id="base-price-display">USD 149.28</span>
                 </div>
 
                 <div class="invoice-row discount-row">
                     <span>Discount</span>
-                    <span>- USD 74.64</span>
+                    <span id="discount-display">- USD 74.64</span>
                 </div>
 
                 <div class="total-row">
                     <span>Total</span>
-                    <span class="total-price">USD 74.64</span>
+                    <span class="total-price" id="total-price-display">USD 74.64</span>
                 </div>
 
                 <div class="promo-wrapper">
@@ -616,7 +619,8 @@
                     <button type="button" class="promo-btn">Apply</button>
                 </div>
 
-                <a href="#" class="btn-continue-checkout">Continue</a>
+                <!-- اتصال دکمه به اسکریپت فکتور پرداخت واقعی کریپتو -->
+                <button type="button" id="submit-pay-btn" class="btn-continue-checkout" onclick="processPayment()">Continue</button>
 
                 <div class="secure-notice">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -638,6 +642,7 @@
     </main>
 
     <script>
+        // مدیریت سوییچ کردن روی متدها بدون دستکاری دیزاین
         document.querySelectorAll('.location-options .radio-box').forEach(box => {
             box.addEventListener('click', function() {
                 document.querySelectorAll('.location-options .radio-box').forEach(b => b.classList.remove('selected'));
@@ -651,6 +656,84 @@
                 this.classList.add('selected');
             });
         });
+
+        // --- بارگذاری کاملاً داینامیک فاکتور بر اساس پلن انتخاب شده در صفحه یک ---
+        const savedPlanName = localStorage.getItem('selected_plan_name') || '12 Months Plan';
+        const savedTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '149.28');
+        const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; // کلید عمومی شما جهت ارسال ریکوئست ساخت فاکتور
+
+        // تفکیک مقادیر جهت حفظ دیزاین خطی فاکتور اصلی شما
+        let basePrice = savedTotalPrice;
+        let discountPrice = 0;
+
+        if (savedPlanName.includes('12')) {
+            basePrice = savedTotalPrice * 2; 
+            discountPrice = savedTotalPrice;
+        } else if (savedPlanName.includes('6')) {
+            basePrice = savedTotalPrice / 0.6;
+            discountPrice = basePrice - savedTotalPrice;
+        }
+
+        // جایگذاری داینامیک مقادیر در فاکتور شیشه‌ای سمت راست
+        document.getElementById('plan-title-display').innerText = savedPlanName;
+        document.getElementById('base-price-display').innerText = 'USD ' + basePrice.toFixed(2);
+        document.getElementById('discount-display').innerText = '- USD ' + discountPrice.toFixed(2);
+        document.getElementById('total-price-display').innerText = 'USD ' + savedTotalPrice.toFixed(2);
+
+        // --- پردازش و ایجاد تراکنش کریپتو زنده و بدون نقص ---
+        async function processPayment() {
+            const emailInput = document.getElementById('user-email').value;
+            if(!emailInput || !emailInput.includes('@')) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            const activeMethod = document.querySelector('.payment-methods-list .method-item.selected span').innerText;
+            
+            // اگر متد ارز دیجیتال انتخاب شده باشد، به فاکتور زنده NOWPayments متصل می‌شود
+            if (activeMethod === "Cryptocurrency") {
+                const payBtn = document.getElementById('submit-pay-btn');
+                payBtn.innerText = "Connecting to Gateway...";
+                payBtn.disabled = true;
+
+                const uniqueOrderId = 'ARGUS-' + Date.now();
+
+                try {
+                    const response = await fetch('https://api.nowpayments.io/v1/invoice', {
+                        method: 'POST',
+                        headers: {
+                            'x-api-key': apiKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            price_amount: savedTotalPrice,
+                            price_currency: "usd",
+                            order_id: uniqueOrderId,
+                            order_description: "ARGUSVPN: " + savedPlanName,
+                            success_url: window.location.origin + '/success.html',
+                            cancel_url: window.location.href
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data && data.invoice_url) {
+                        window.location.href = data.invoice_url; // انتقال مستقیم و پایدار به فاکتور کریپتو
+                    } else {
+                        alert("Could not load payment gateway. Try again.");
+                        payBtn.innerText = "Continue";
+                        payBtn.disabled = false;
+                    }
+                } catch (error) {
+                    alert("Gateway connection error. Check your connection.");
+                    payBtn.innerText = "Continue";
+                    payBtn.disabled = false;
+                }
+            } else {
+                // شبیه‌سازی متدهای دیگر (پی‌پال یا ویزاکارت) بدون به هم ریختن منطق فلو
+                window.location.href = 'success.html';
+            }
+        }
     </script>
 </body>
 </html>
