@@ -17,7 +17,7 @@
         }
 
         body {
-            background-color: #05060f; /* دقیقاً همان رنگ تیره و عمیق صفحه انتخاب پلن شما */
+            background-color: #05060f;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -25,14 +25,11 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* --- هدر کپسولی خطی یکپارچه آرگوس --- */
         header {
             width: 100%;
             max-width: 1200px;
             margin: 24px auto 0 auto;
             padding: 0 16px;
-            position: relative;
-            z-index: 10;
         }
 
         .navbar {
@@ -60,8 +57,7 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 18px;
-            align-items: center;
+            gap: 20px;
         }
 
         .nav-links a {
@@ -71,7 +67,7 @@
             font-weight: 500;
         }
 
-        .nav-links a.active {
+        .nav-links .active {
             color: #ffffff;
         }
 
@@ -102,7 +98,7 @@
             font-weight: 600;
         }
 
-        /* --- استپ‌بار ترکینگ مراحل خرید هماهنگ با صفحه قبل --- */
+        /* --- Steps Tracking --- */
         .steps-container {
             display: flex;
             justify-content: center;
@@ -110,7 +106,7 @@
             gap: 24px;
             margin: 40px auto 20px auto;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .step {
@@ -131,7 +127,7 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 12px;
         }
 
@@ -143,307 +139,173 @@
         .steps-divider {
             width: 40px;
             height: 1px;
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* عنوان اصلی صفحه */
-        .page-title {
-            text-align: center;
-            font-size: clamp(26px, 4vw, 38px);
-            font-weight: 700;
-            margin-bottom: 40px;
-            letter-spacing: -0.5px;
-        }
-
-        /* --- ساختار دو ستونه اصلی تسویه حساب --- */
-        .checkout-layout {
-            width: 100%;
+        /* --- Main Layout --- */
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
             max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 16px 80px 16px;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 48px;
-            align-items: start;
-        }
-
-        /* ستون سمت چپ: فرم‌ها */
-        .checkout-form-side {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .section-label {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #ffffff;
-            text-align: left;
-        }
-
-        .sub-label {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 8px;
-            text-align: left;
-        }
-
-        /* اینپوت ایمیل */
-        .email-input-wrapper input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 16px;
-            color: #ffffff;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.2s;
+            margin: 40px auto 80px auto;
+            padding: 0 16px;
         }
 
-        .email-input-wrapper input:focus {
-            border-color: rgba(139, 92, 246, 0.5);
-        }
-
-        /* باکس دوتایی گزینه‌های لوکیشن پرداخت */
-        .location-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .radio-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            user-select: none;
-            transition: border-color 0.2s, background 0.2s;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* کاستوم رادیو باتن طرح نئون نقشه طرح شما */
-        .radio-dot {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: border-color 0.2s;
-        }
-
-        .radio-dot::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: transparent;
-            transition: background 0.2s;
-        }
-
-        /* حالت انتخاب شده پیش‌فرض */
-        .radio-box.selected {
-            border-color: #8b5cf6;
-            background: rgba(139, 92, 246, 0.04);
-        }
-
-        .radio-box.selected .radio-dot {
-            border-color: #8b5cf6;
-        }
-
-        .radio-box.selected .radio-dot::after {
-            background: #8b5cf6;
-        }
-
-        /* لیست متدهای پرداخت */
-        .payment-methods-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .method-item {
-            background: rgba(255, 255, 255, 0.01);
+        .payment-methods-box {
+            background: rgba(10, 11, 26, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 18px 20px;
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+        }
+
+        /* دکمه پرداخت کریپتو جایگزین اپل پی */
+        .crypto-method-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid #1145ff; /* فوکوس نئونی پیش‌فرض با رنگ امضا */
+            border-radius: 16px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: background 0.2s;
+            margin-bottom: 32px;
         }
 
-        .method-left {
+        .crypto-info-left {
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 15px;
-            font-weight: 500;
+            gap: 16px;
         }
 
-        .method-item.selected {
-            border-color: #8b5cf6;
-            background: rgba(139, 92, 246, 0.02);
+        .crypto-radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #1145ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .method-item.selected .radio-dot {
-            border-color: #8b5cf6;
+        .crypto-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #1145ff;
+            border-radius: 50%;
         }
 
-        .method-item.selected .radio-dot::after {
-            background: #8b5cf6;
+        .crypto-text-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        /* لوگوهای درگاه تراکنش مالی */
-        .brand-badges {
+        .crypto-text-sub {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .crypto-icons-right {
             display: flex;
             gap: 8px;
             align-items: center;
         }
 
-        .badge-img {
-            height: 20px;
-            opacity: 0.85;
+        .crypto-icon-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        /* --- ستون سمت راست: فاکتور چسبان شیشه‌ای (Summary Card) --- */
-        .summary-card {
-            background: rgba(10, 11, 26, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* --- فاکتور شیشه‌ای سمت راست (Summary Invoice) --- */
+        .invoice-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
             padding: 32px;
+            align-self: start;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        /* افکت غلیظ نئونی بنفش بالای فاکتور دقیقاً مطابق تصویر */
-        .summary-card::before {
+        .invoice-card::before {
             content: '';
             position: absolute;
-            top: -40px;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
-            filter: blur(15px);
+            top: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #1145ff, transparent);
         }
 
-        .summary-title {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.45);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .plan-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 20px;
+        .invoice-title {
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .invoice-row {
             display: flex;
             justify-content: space-between;
             font-size: 14px;
-            margin-bottom: 14px;
             color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 16px;
         }
 
-        .invoice-row.discount-row {
-            color: #a78bfa;
-        }
-
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-            font-weight: 600;
+        .invoice-row.total {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 20px;
             color: #ffffff;
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .total-price {
-            font-size: 22px;
             font-weight: 700;
+            font-size: 18px;
         }
 
-        /* فیلد کد تخفیف */
-        .promo-wrapper {
-            display: flex;
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 6px;
-            margin-top: 24px;
-            margin-bottom: 24px;
-        }
-
-        .promo-wrapper input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #ffffff;
-            padding-left: 10px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 14px;
-        }
-
-        .promo-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* دکمه کپسولی سفید Continue نهایی */
-        .btn-continue-checkout {
+        .btn-pay-now {
             width: 100%;
-            background: #ffffff;
+            background-color: #ffffff;
             color: #000000;
             border: none;
             padding: 16px;
             border-radius: 100px;
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
-            display: block;
+            transition: opacity 0.2s, transform 0.1s;
+            margin-top: 16px;
             text-align: center;
-            text-decoration: none;
-            margin-bottom: 20px;
+            display: block;
         }
 
-        .btn-continue-checkout:hover {
+        .btn-pay-now:hover {
             opacity: 0.95;
+        }
+
+        .btn-pay-now:active {
+            transform: scale(0.99);
         }
 
         .secure-notice {
@@ -453,32 +315,16 @@
             gap: 8px;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.35);
-            margin-bottom: 32px;
+            margin-top: 20px;
         }
 
-        /* گارانتی بازگشت وجه زیر کارت فاکتور */
-        .card-bottom-guarantee {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* --- ریسپانسیو کامپکت تبلت و موبایل --- */
         @media (max-width: 900px) {
-            .checkout-layout {
+            .payment-layout {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 32px;
             }
             .nav-links {
                 display: none;
-            }
-        }
-        @media (max-width: 520px) {
-            .location-options {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -488,7 +334,6 @@
     <header>
         <nav class="navbar">
             <a href="index.html" class="logo">ARGUSVPN</a>
-            
             <ul class="nav-links">
                 <li><a href="index.html">Why ArgusVpn?</a></li>
                 <li><a href="cost.html" class="active">Cost</a></li>
@@ -496,161 +341,134 @@
                 <li><a href="#">Become a partner</a></li>
                 <li><a href="#">Blog</a></li>
             </ul>
-            
             <div class="nav-actions">
                 <button class="lang-selector">EN</button>
-                <a href="login.html" class="login-btn">Login</a>
+                <a href="login.html" style="color: #fff; text-decoration: none; font-size: 12px;">Login</a>
                 <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
             </div>
         </nav>
     </header>
 
     <div class="steps-container">
-        <div class="step">
-            <span class="step-num">1</span> Choose plan
-        </div>
+        <div class="step"><span class="step-num">1</span> Choose plan</div>
         <div class="steps-divider"></div>
-        <div class="step active">
-            <span class="step-num">2</span> Payment Information
-        </div>
+        <div class="step active"><span class="step-num">2</span> Payment Information</div>
         <div class="steps-divider"></div>
-        <div class="step">
-            <span class="step-num">3</span> Success
-        </div>
+        <div class="step"><span class="step-num">3</span> Success</div>
     </div>
 
-    <h1 class="page-title">Enter payment information</h1>
-
-    <main class="checkout-layout">
+    <main class="payment-layout">
         
-        <div class="checkout-form-side">
+        <!-- بخش متدهای پرداخت (سمت چپ) -->
+        <div class="payment-methods-box">
+            <h2 class="section-title">Payment Method</h2>
+            <p class="section-subtitle">Select your preferred encrypted decentralized crypto gateway.</p>
             
-            <div>
-                <h2 class="section-label">Email</h2>
-                <div class="email-input-wrapper">
-                    <input type="email" placeholder="Enter your email" required>
+            <!-- دکمه انتخابی کریپتو منطبق بر ساختار شیک پروژه -->
+            <div class="crypto-method-btn">
+                <div class="crypto-info-left">
+                    <div class="crypto-radio"></div>
+                    <div>
+                        <p class="crypto-text-title">Cryptocurrency</p>
+                        <p class="crypto-text-sub">Pay via BTC, USDT, ETH or Litecoin instantly</p>
+                    </div>
                 </div>
-                <p class="sub-label">We will send the receipt to this email</p>
-            </div>
-
-            <div class="location-options">
-                <div class="radio-box selected">
-                    <div class="radio-dot"></div>
-                    <span>Pay on our site</span>
-                </div>
-                <div class="radio-box">
-                    <div class="radio-dot"></div>
-                    <span>Pay on the site</span>
+                <div class="crypto-icons-right">
+                    <span class="crypto-icon-badge">USDT</span>
+                    <span class="crypto-icon-badge">BTC</span>
+                    <span class="crypto-icon-badge">ETH</span>
                 </div>
             </div>
-            <p class="sub-label" style="margin-top: -16px;">You will be redirected to complete the payment securely.</p>
-
-            <div>
-                <h2 class="section-label" style="margin-bottom: 20px;">Method of payment</h2>
-                <div class="payment-methods-list">
-                    
-                    <div class="method-item selected">
-                        <div class="method-left">
-                            <div class="radio-dot"></div>
-                            <span>Visa / Mastercard</span>
-                        </div>
-                        <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard">
-                        </div>
-                    </div>
-
-                    <div class="method-item">
-                        <div class="method-left">
-                            <div class="radio-dot"></div>
-                            <span>PayPal</span>
-                        </div>
-                        <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal">
-                        </div>
-                    </div>
-
-                    <div class="method-item">
-                        <div class="method-left">
-                            <div class="radio-dot"></div>
-                            <span>Apple Pay</span>
-                        </div>
-                        <div class="brand-badges">
-                            <img class="badge-img" src="https://img.icons8.com/ios-filled/50/ffffff/apple-pay.png" alt="Apple Pay">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
 
-        <div>
-            <div class="summary-card">
-                <div class="summary-title">Subscription</div>
-                <div class="plan-header">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
-                        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"></path>
-                        <path d="M3 20h18v2H3z"></path>
-                    </svg>
-                    <span style="margin-left: 8px;">12-month subscription</span>
-                </div>
-
-                <div class="invoice-row">
-                    <span>Price</span>
-                    <span>USD 149.28</span>
-                </div>
-
-                <div class="invoice-row discount-row">
-                    <span>Discount</span>
-                    <span>- USD 74.64</span>
-                </div>
-
-                <div class="total-row">
-                    <span>Total</span>
-                    <span class="total-price">USD 74.64</span>
-                </div>
-
-                <div class="promo-wrapper">
-                    <input type="text" placeholder="Promo code">
-                    <button type="button" class="promo-btn">Apply</button>
-                </div>
-
-                <a href="#" class="btn-continue-checkout">Continue</a>
-
-                <div class="secure-notice">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    <span>Secure and encrypted payment</span>
-                </div>
+        <!-- فاکتور شیشه‌ای داینامیک (سمت راست) -->
+        <div class="invoice-card">
+            <h3 class="invoice-title">Order Summary</h3>
+            
+            <div class="invoice-row">
+                <span>Subscription</span>
+                <!-- نام پلن این‌جا لود می‌شود -->
+                <span id="invoice-plan-name" style="color: #fff; font-weight: 500;">Loading Plan...</span>
+            </div>
+            
+            <div class="invoice-row">
+                <span>Setup Fee</span>
+                <span style="color: #d2fc00;">FREE</span>
             </div>
 
-            <div class="card-bottom-guarantee" style="margin-top: 24px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-                <span style="margin-left: 6px;">30-day money-back guarantee</span>
+            <div class="invoice-row total">
+                <span>Total Amount</span>
+                <!-- قیمت کل فاکتور این‌جا لود می‌شود -->
+                <span id="invoice-total-price">$0.00</span>
+            </div>
+
+            <!-- دکمه نهایی اتصال به درگاه NOWPayments -->
+            <button class="btn-pay-now" id="pay-button" onclick="createCryptoInvoice()">Continue to Payment</button>
+            
+            <div class="secure-notice">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                SSL Encrypted & Secured Payment
             </div>
         </div>
 
     </main>
 
     <script>
-        document.querySelectorAll('.location-options .radio-box').forEach(box => {
-            box.addEventListener('click', function() {
-                document.querySelectorAll('.location-options .radio-box').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
+        // لود کردن اتوماتیک اطلاعات پلن از حافظه مرورگر
+        const planName = localStorage.getItem('selected_plan_name') || '12 Months Plan';
+        const planPrice = localStorage.getItem('selected_plan_price') || '149.28';
+        const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; // کلید اصلی شما برای فرستادن تراکنش
 
-        document.querySelectorAll('.payment-methods-list .method-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.payment-methods-list .method-item').forEach(i => i.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
+        // نشاندن اطلاعات واقعی روی فاکتور
+        document.getElementById('invoice-plan-name').innerText = planName;
+        document.getElementById('invoice-total-price').innerText = '$' + parseFloat(planPrice).toFixed(2);
+
+        // تابع اتصال واقعی و زنده به درگاه فاکتور NOWPayments
+        async function createCryptoInvoice() {
+            const payButton = document.getElementById('pay-button');
+            payButton.innerText = "Generating Invoice...";
+            payButton.disabled = true;
+
+            // ساخت یک آیدی فاکتور منحصربه‌فرد فرضی
+            const orderId = 'ARGUS-' + Math.floor(Math.random() * 900000 + 100000);
+
+            try {
+                // ارسال درخواست مستقیم ساخت لینک پرداخت به API رسمی NOWPayments
+                const response = await fetch('https://api.nowpayments.io/v1/invoice', {
+                    method: 'POST',
+                    headers: {
+                        'x-api-key': apiKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        price_amount: parseFloat(planPrice),
+                        price_currency: "usd",
+                        order_id: orderId,
+                        order_description: "ARGUSVPN " + planName,
+                        // آدرس سایتی که بعد از پرداخت موفق کاربر باید به آن برگردد (مرحله ۳)
+                        success_url: window.location.origin + '/success.html',
+                        cancel_url: window.location.href
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data && data.invoice_url) {
+                    // انتقال اتوماتیک و روان کاربر به درگاه پرداخت رسمی کریپتو
+                    window.location.href = data.invoice_url;
+                } else {
+                    alert("Gateway connection issue. Please try again.");
+                    payButton.innerText = "Continue to Payment";
+                    payButton.disabled = false;
+                }
+
+            } catch (error) {
+                console.error("Payment Error: ", error);
+                alert("Network error. Please check your configuration.");
+                payButton.innerText = "Continue to Payment";
+                payButton.disabled = false;
+            }
+        }
     </script>
 </body>
 </html>
