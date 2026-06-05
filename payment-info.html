@@ -718,7 +718,14 @@
     </main>
 
     <script>
-        // کدهای پایه‌ای و رفتاری UI (تا گام بعدی که به دیتابیس متصلش کنیم)
+        // ۱. مقداردهی اولیه سابابیس (کلیدها را از Vercel یا متغیرهای محیطی می‌گیرد)
+        // اگر هنوز در ورسل ست نکردی، می‌توانی موقتاً رشته‌های آدرس و توکن خودت را مستقیماً اینجا داخل کوتیشن بگذاری
+        const SUPABASE_URL = window.env?.SUPABASE_URL || "آدرس_سابابیس_شما";
+        const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || "کلید_anon_شما";
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // مدیریت حالت‌های رادیو باکس لوکیشن پرداخت
         document.querySelectorAll('.location-options .radio-box').forEach(box => {
             box.addEventListener('click', function() {
                 document.querySelectorAll('.location-options .radio-box').forEach(b => b.classList.remove('selected'));
@@ -726,6 +733,7 @@
             });
         });
 
+        // مدیریت تغییر متدهای اصلی پرداخت
         document.querySelectorAll('.payment-methods-list .method-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 if (e.target.closest('.coin-mini-btn')) return; 
@@ -734,6 +742,7 @@
             });
         });
 
+        // مدیریت انتخاب مینی‌دکمه‌های ارز دیجیتال
         let selectedCryptoCoin = 'trx'; 
         document.querySelectorAll('.coin-mini-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
@@ -747,34 +756,176 @@
             });
         });
 
+        // دریافت اطلاعات فاکتور از localStorage
         const savedPlanName = localStorage.getItem('selected_plan_name') || '12 Months Plan';
-        let savedTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '74.64');
-        const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; 
+        let currentTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '74.64');
+        const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; // کلید NOWPayments شما
 
-        let basePrice = savedTotalPrice;
+        let basePrice = currentTotalPrice;
         let discountPrice = 0;
+        let isPromoApplied = false;
 
         if (savedPlanName.includes('12')) {
-            basePrice = savedTotalPrice * 2; 
-            discountPrice = savedTotalPrice;
+            basePrice = currentTotalPrice * 2; 
+            discountPrice = currentTotalPrice;
         } else if (savedPlanName.includes('6')) {
-            basePrice = savedTotalPrice / 0.6;
-            discountPrice = basePrice - savedTotalPrice;
+            basePrice = currentTotalPrice / 0.6;
+            discountPrice = basePrice - currentTotalPrice;
         }
 
+        // نمایش اولیه مقادیر فاکتور در صفحه
         document.getElementById('plan-title-display').innerText = savedPlanName;
         document.getElementById('base-price-display').innerText = 'USD ' + basePrice.toFixed(2);
         document.getElementById('discount-display').innerText = '- USD ' + discountPrice.toFixed(2);
-        document.getElementById('total-price-display').innerText = 'USD ' + savedTotalPrice.toFixed(2);
+        document.getElementById('total-price-display').innerText = 'USD ' + currentTotalPrice.toFixed(2);
 
-        function applyPromoCode() {
-            // این تابع در بخش بعدی به Supabase متصل خواهد شد
-            alert("Promo system ready to sync with Supabase!");
+        // ۲. سیستم اعتبارسنجی واقعی کد تخفیف از دیتابیس Supabase
+        async function applyPromoCode() {
+            if(isPromoApplied) {
+                alert("A promo code is already applied.");
+                return;
+            }
+
+            const promoCodeInput = document.getElementById('promo-input').value.trim();
+            if(!promoCodeInput) {
+                alert("Please enter a promo code.");
+                return;
+            }
+
+            try {
+                // استعلام کد تخفیف از جدول سابابیس
+                const { data, error } = await supabase
+                    .from('promo_codes')
+                    .select('*')
+                    .eq('code', promoCodeInput)
+                    .eq('is_active', true)
+                    .single();
+
+                if (error || !data) {
+                    alert("Invalid or expired promo code.");
+                    return;
+                }
+
+                // بررسی تاریخ انقضا
+                if (data.expires_at && new Date(data.expires_at) < new Date()) {
+                    alert("This promo code has expired.");
+                    return;
+                }
+
+                // اعمال درصد تخفیف روی فاکتور
+                const discountPercent = data.discount_percent;
+                const extraDiscount = (currentTotalPrice * discountPercent) / 100;
+                currentTotalPrice = currentTotalPrice - extraDiscount;
+                discountPrice = discountPrice + extraDiscount;
+
+                // به‌روزرسانی مبالغ در فرانت‌اَند
+                document.getElementById('discount-display').innerText = '- USD ' + discountPrice.toFixed(2);
+                document.getElementById('total-price-display').innerText = 'USD ' + currentTotalPrice.toFixed(2);
+                
+                isPromoApplied = true;
+                alert(`Promo code applied successfully! ${discountPercent}% discount added.`);
+
+            } catch (err) {
+                alert("Error checking promo code.");
+            }
         }
 
+        // ۳. پردازش نهایی پرداخت و ثبت اطلاعات کاربر و تراکنش در دیتابیس
         async function processPayment() {
-            // این تابع در بخش بعدی تراکنش را در سابابیس ثبت خواهد کرد
-            window.location.href = 'success.html';
+            const emailInput = document.getElementById('user-email').value.trim();
+            if(!emailInput || !emailInput.includes('@')) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            const payBtn = document.getElementById('submit-pay-btn');
+            payBtn.disabled = true;
+            payBtn.innerText = "Processing order...";
+
+            let userId = null;
+
+            try {
+                // مرحله الف: بررسی وجود کاربر در جدول users یا ساخت کاربر جدید
+                const { data: userCheck, error: userError } = await supabase
+                    .from('users')
+                    .select('id')
+                    .eq('email', emailInput)
+                    .maybeSingle();
+
+                if (userCheck) {
+                    userId = userCheck.id;
+                } else {
+                    const { data: newUser, error: createError } = await supabase
+                        .from('users')
+                        .insert([{ email: emailInput, subscription_status: 'free' }])
+                        .select('id')
+                        .single();
+                    
+                    if (createError) throw createError;
+                    userId = newUser.id;
+                }
+
+                const selectedMethod = document.querySelector('.payment-methods-list .method-item.selected');
+                const uniqueOrderId = 'ARGUS-' + Date.now();
+
+                // مرحله ب: اگر متد کریپتو انتخاب شده بود، متصل کردن به درگاه NOWPayments
+                if (selectedMethod && selectedMethod.id === 'crypto-main-item') {
+                    payBtn.innerText = `Connecting to ${selectedCryptoCoin.toUpperCase()} Gateway...`;
+
+                    // ساخت فاکتور در درگاه پرداخت کریپتو
+                    const response = await fetch('https://api.nowpayments.io/v1/invoice', {
+                        method: 'POST',
+                        headers: {
+                            'x-api-key': apiKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            price_amount: currentTotalPrice,
+                            price_currency: "usd",
+                            pay_currency: selectedCryptoCoin, 
+                            order_id: uniqueOrderId,
+                            order_description: "ARGUSVPN: " + savedPlanName,
+                            success_url: window.location.origin + '/success.html?order_id=' + uniqueOrderId,
+                            cancel_url: window.location.href
+                        })
+                    });
+
+                    const invoiceData = await response.json();
+
+                    if (invoiceData && invoiceData.invoice_url) {
+                        // مرحله ج: ثبت نهایی تراکنش باز شده در دیتابیس Supabase قبل از ریدایرکت کاربر
+                        const { error: txError } = await supabase
+                            .from('transactions')
+                            .insert([{
+                                user_id: userId,
+                                order_id: uniqueOrderId,
+                                invoice_id: invoiceData.id ? String(invoiceData.id) : null,
+                                amount: currentTotalPrice,
+                                plan_name: savedPlanName,
+                                pay_currency: selectedCryptoCoin,
+                                status: 'pending'
+                            }]);
+
+                        if (txError) throw txError;
+
+                        // هدایت کاربر به صفحه پرداخت مستقیم ارز دیجیتال
+                        window.location.href = invoiceData.invoice_url;
+                    } else {
+                        alert("Could not load payment gateway. Try again.");
+                        payBtn.innerText = "Continue";
+                        payBtn.disabled = false;
+                    }
+                } else {
+                    // برای سایر متدها (مثلاً پی‌پال فرضی یا تستی مستقیم رفتن به موفقیت)
+                    window.location.href = 'success.html';
+                }
+
+            } catch (error) {
+                console.error(error);
+                alert("Database connection sync timeout or error.");
+                payBtn.innerText = "Continue";
+                payBtn.disabled = false;
+            }
         }
     </script>
 </body>
