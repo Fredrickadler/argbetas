@@ -66,7 +66,7 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 18px;
             align-items: center;
         }
 
@@ -136,17 +136,18 @@
             padding: 40px 20px;
         }
 
-        /* فونت اختصاصی مدرن و عریض برای کلمه Argus وسط صفحه */
+        /* فونت اختصاصی مدرن و عریض - فاصله حروف بر اساس خواست شما بسیار بیشتر شد */
         .brand-title {
             font-family: 'Michroma', sans-serif;
-            font-size: clamp(32px, 8.5vw, 100px);
+            font-size: clamp(32px, 7vw, 85px); /* کمی سایز فونت تعدیل شد تا در بالاترین فاصله هم بیرون نزند */
             font-weight: 700;
-            letter-spacing: clamp(14px, 4.5vw, 60px); 
-            text-indent: clamp(14px, 4.5vw, 60px);
+            letter-spacing: clamp(30px, 8.5vw, 110px); /* فاصله حروف فوق‌العاده بیشتر شد */
+            text-indent: clamp(30px, 8.5vw, 110px); /* بالانس کردن اثر لتر اسپیسینگ از سمت راست */
             text-transform: uppercase;
             margin-bottom: 50px;
             line-height: 1.1;
             color: #ffffff;
+            width: 100%;
         }
 
         .subtitle {
@@ -182,20 +183,20 @@
         }
 
         /* ریسپانسیو دسکتاپ و تبلت مانیتورها */
-        @media (max-width: 860px) {
+        @media (max-width: 920px) {
             .nav-links {
-                gap: 12px;
+                gap: 10px;
             }
             .nav-links a {
                 font-size: 11px;
             }
             .navbar {
-                padding: 10px 16px;
+                padding: 10px 14px;
             }
         }
 
-        /* استایل‌های اختصاصی موبایل: شیفت محتوا به بالا و افزایش فاصله حروف ARGUS */
-        @media (max-width: 720px) {
+        /* استایل‌های اختصاصی موبایل: حفظ فاصله مناسب برای اسکرین‌های کوچک */
+        @media (max-width: 768px) {
             .nav-links {
                 display: none; 
             }
@@ -214,8 +215,8 @@
             }
             
             .brand-title {
-                letter-spacing: 26px !important;
-                text-indent: 26px !important;
+                letter-spacing: 24px !important;
+                text-indent: 24px !important;
                 margin-bottom: 40px;
             }
         }
@@ -233,6 +234,7 @@
                 <li><a href="support.html">Support</a></li>
                 <li><a href="partner.html">Become a partner</a></li>
                 <li><a href="blog.html">Blog</a></li>
+                <li><a href="404.html" style="color: rgba(255, 100, 100, 0.8);">Test 404</a></li>
             </ul>
             
             <div class="nav-actions">
