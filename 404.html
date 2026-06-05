@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - 404 Page Not Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Michroma&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #04040c;
+            /* لود مستقیم بکگراند کرم‌چاله‌ای لوکس و سه‌بعدی ارسالی شما */
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/C89BDD56-F18C-4A7C-BCB1-EB087B4080F8.png?raw=true');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- هدر کپسولی یکدست سیستم آرگوس --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- محتوای مرکزی خطای 404 --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* استایل فونت هندسی و فوق عریض عدد 404 متناسب با تصویر */
+        .error-code {
+            font-family: 'Michroma', sans-serif;
+            font-size: clamp(60px, 12vw, 130px);
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1;
+            /* شبیه‌سازی دقیق فاصله حروف پهنِ داخل تصویر ارسالی */
+            letter-spacing: clamp(20px, 4vw, 50px);
+            text-indent: clamp(20px, 4vw, 50px);
+            margin-bottom: 24px;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+        }
+
+        /* متن PAGE NOT FOUND */
+        .error-message {
+            font-size: clamp(14px, 1.8vw, 18px);
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* دکمهٔ کپسولی سفید وسط صفحه */
+        .btn-home {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 14px 48px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-home:hover {
+            transform: scale(1.02);
+            opacity: 0.95;
+        }
+
+        /* --- بهینه‌سازی برای دستگاه‌های کوچک --- */
+        @media (max-width: 720px) {
+            .nav-links {
+                display: none; /* مخفی شدن منوهای میانی جهت حفظ ساختار صاف هدر کپسولی در موبایل */
+            }
+            main {
+                justify-content: center;
+                padding-bottom: 10vh;
+            }
+            .error-code {
+                letter-spacing: 12px !important;
+                text-indent: 12px !important;
+            }
+            .error-message {
+                letter-spacing: 2px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="why-argus.html">Why ArgusVpn?</a></li>
+                <li><a href="cost.html">Cost</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="partner.html">Become a partner</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="error-code">404</div>
+        <h1 class="error-message">Page not found</h1>
+        <a href="index.html" class="btn-home">Go to main page</a>
+    </main>
+
+</body>
+</html>
