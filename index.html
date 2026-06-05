@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARGUSVPN - VPN That Simply Works</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syncopate:wght@700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Michroma&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -18,8 +19,8 @@
 
         body {
             background-color: #000000;
-            /* مسیر نسبی هماهنگ با ساختار گیت‌هاب که بالاتر توضیح داده شد */
-            background-image: url('assets/images/background.webp');
+            /* لود مستقیم عکس پس‌زمینه از هاست گیت‌هاب شما */
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/0F7F9301-6C76-4FFE-8283-3FC397A104E3.png?raw=true');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -30,7 +31,7 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* استایل هدر: تضمین کپسول تخت و خط صاف مینی‌مال روی تمام دستگاه‌ها */
+        /* ساختار کپسول هدر مدرن */
         header {
             width: 100%;
             max-width: 1200px;
@@ -48,13 +49,14 @@
             padding: 10px 24px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            height: 54px; /* فیکس کردن دقیق ارتفاع برای جلوگیری از کلفت شدن */
+            height: 54px;
         }
 
+        /* فونت شارپ سای‌فای برای لوگو هدر */
         .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 14px;
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
             letter-spacing: 2px;
             color: #ffffff;
             text-decoration: none;
@@ -123,7 +125,7 @@
             opacity: 0.95;
         }
 
-        /* بخش میانی صفحه (Hero Section) */
+        /* بخش محتوای هیرو */
         main {
             flex: 1;
             display: flex;
@@ -134,12 +136,12 @@
             padding: 40px 20px;
         }
 
-        /* تنظیم دقیق فاصله‌گذاری فوق‌العاده کشیده و عریض کلمه Argus */
+        /* فونت اختصاصی مدرن و عریض برای کلمه Argus وسط صفحه */
         .brand-title {
-            font-family: 'Syncopate', sans-serif;
-            font-size: clamp(34px, 9vw, 110px);
+            font-family: 'Michroma', sans-serif;
+            font-size: clamp(32px, 8.5vw, 100px);
             font-weight: 700;
-            letter-spacing: clamp(14px, 4.5vw, 60px);
+            letter-spacing: clamp(14px, 4.5vw, 60px); /* فاصله مبنا برای دسکتاپ */
             text-indent: clamp(14px, 4.5vw, 60px);
             text-transform: uppercase;
             margin-bottom: 50px;
@@ -148,7 +150,7 @@
         }
 
         .subtitle {
-            font-size: clamp(14px, 2vw, 20px);
+            font-size: clamp(14px, 1.8vw, 18px);
             font-weight: 500;
             letter-spacing: 2px;
             margin-bottom: 30px;
@@ -179,7 +181,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ریسپانس فیکس: حفظ ساختار باریک هدر در صفحات کوچک بدون زیر هم چیدن لایه‌ها */
+        /* ریسپانسیو دسکتاپ و تبلت مانیتورها */
         @media (max-width: 860px) {
             .nav-links {
                 gap: 12px;
@@ -192,8 +194,8 @@
             }
         }
 
+        /* استایل‌های اختصاصی موبایل: شیفت محتوا به بالا و افزایش فاصله حروف ARGUS */
         @media (max-width: 720px) {
-            /* در موبایل‌های بسیار کوچک پیوندها برای حفظ خط صاف مخفی و دکمه اصلی و لوگو فشرده و شیک چیده می‌شوند */
             .nav-links {
                 display: none; 
             }
@@ -204,6 +206,19 @@
             .cta-btn-nav {
                 padding: 6px 12px;
                 font-size: 11px;
+            }
+            
+            /* بردن کل محتوا به سمت بالای صفحه در حالت موبایل */
+            main {
+                justify-content: flex-start;
+                padding-top: 15vh;
+            }
+            
+            /* افزایش چشمگیر فاصله حروف کلمه آرگوس در موبایل */
+            .brand-title {
+                letter-spacing: 26px !important;
+                text-indent: 26px !important;
+                margin-bottom: 40px;
             }
         }
     </style>
