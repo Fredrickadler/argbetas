@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- کتابخانه Supabase جهت آماده‌سازی اتصال به دیتابیس در آینده نزدیک -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         * {
             margin: 0;
@@ -155,7 +158,7 @@
             background-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* --- بخش محتوای اصلی تع those قیمت‌ها --- */
+        /* --- بخش محتوای اصلی تعیین قیمت‌ها --- */
         .cost-section {
             max-width: 1100px;
             margin: 0 auto;
@@ -316,6 +319,7 @@
 
         /* دکمه‌های ادامه خرید کارت‌ها */
         .btn-continue {
+            display: block;
             width: 100%;
             background-color: #ffffff;
             color: #000000;
@@ -325,12 +329,18 @@
             text-decoration: none;
             font-size: 15px;
             font-weight: 600;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
             margin-bottom: 16px;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-continue:hover {
             opacity: 0.95;
+        }
+
+        .btn-continue:active {
+            transform: scale(0.99);
         }
 
         .card-guarantee {
@@ -346,17 +356,29 @@
 
         /* --- ریسپانسیو و مدیریت خط صاف هدر در موبایل --- */
         @media (max-width: 960px) {
+            .steps-container {
+                gap: 12px;
+                font-size: 12px;
+                padding: 0 10px;
+            }
+            .steps-divider {
+                width: 20px;
+            }
             .cards-grid {
                 grid-template-columns: 1fr; /* کارت‌ها در موبایل زیر هم می‌روند */
-                gap: 32px;
+                gap: 24px;
                 max-width: 450px;
                 margin: 20px auto 0 auto;
             }
             .card-description {
                 min-height: auto;
+                margin-bottom: 24px;
             }
             .nav-links {
                 display: none; /* هدر کاملاً تخت و فشرده بدون تغییر شکل کپسول اصلی */
+            }
+            .price-card {
+                padding: 32px 24px;
             }
         }
     </style>
@@ -403,6 +425,7 @@
 
         <div class="cards-grid">
             
+            <!-- پلن ۱ ماهه -->
             <div class="price-card">
                 <div>
                     <p class="plan-duration">1 Month</p>
@@ -419,11 +442,12 @@
                     <p class="card-description">For a short online journey, a month-to-month plan gives you full VPN power with total flexibility.</p>
                 </div>
                 <div>
-                    <a href="payment-info.html" class="btn-continue">Continue</a>
+                    <button class="btn-continue" onclick="selectTariff('1 Month Plan', 4.99)">Continue</button>
                     <p class="card-guarantee">30-day money-back guarantee</p>
                 </div>
             </div>
 
+            <!-- پلن ۱۲ ماهه (ویژه) -->
             <div class="price-card featured">
                 <div>
                     <p class="plan-duration">12 Months</p>
@@ -441,11 +465,13 @@
                     <p class="card-description">Our 12-month program offers maximum VPN security at the best value. Ideal for maintaining your privacy year-round.</p>
                 </div>
                 <div>
-                    <a href="payment-info.html" class="btn-continue">Continue</a>
+                    <!-- محاسبه کل قیمت ۱۲ ماهه به صورت اتوماتیک (12 * 12.44) -->
+                    <button class="btn-continue" onclick="selectTariff('12 Months Plan', 149.28)">Continue</button>
                     <p class="card-guarantee">30-day money-back guarantee</p>
                 </div>
             </div>
 
+            <!-- پلن ۶ ماهه -->
             <div class="price-card">
                 <div>
                     <p class="plan-duration">6 Months</p>
@@ -463,7 +489,8 @@
                     <p class="card-description">Get 6 full months of strong and secure VPN protection. Enjoy more privacy, higher speeds, and a safer online experience.</p>
                 </div>
                 <div>
-                    <a href="payment-info.html" class="btn-continue">Continue</a>
+                    <!-- محاسبه کل قیمت ۶ ماهه به صورت اتوماتیک (6 * 5.75) -->
+                    <button class="btn-continue" onclick="selectTariff('6 Months Plan', 34.50)">Continue</button>
                     <p class="card-guarantee">30-day money-back guarantee</p>
                 </div>
             </div>
@@ -471,5 +498,25 @@
         </div>
     </main>
 
+    <!-- کدهای فنی منطبق با درگاه پرداخت و دیتابیس آینده شما -->
+    <script>
+        // اطلاعات عمومی درگاه NOWPayments شما که در سیستم ذخیره می‌شود
+        const gatewayPublicId = "d7d17157-15ac-4abc-a823-9fa0d50bb23a";
+
+        // ساختار اولیه اتصال به Supabase (برای متصل کردن نهایی دیتابیس در گام‌های بعد)
+        const supabaseUrl = 'https://your-project-id.supabase.co'; 
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        // const supabase = window.supabase.createClient(supabaseUrl, supabaseKey); // برای زمان فعال‌سازی دیتابیس
+
+        function selectTariff(tariffName, totalPrice) {
+            // ذخیره هوشمند مقادیر در مرورگر جهت استفاده لایو در صفحه اطلاعات پرداخت
+            localStorage.setItem('selected_plan_name', tariffName);
+            localStorage.setItem('selected_plan_price', totalPrice);
+            localStorage.setItem('nowpayments_id', gatewayPublicId);
+
+            // هدایت کاربر به صفحه فاکتور و اطلاعات نهایی پرداخت بدون خرابی آدرس
+            window.location.href = 'payment-info.html';
+        }
+    </script>
 </body>
 </html>
