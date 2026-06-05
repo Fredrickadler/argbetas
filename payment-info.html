@@ -17,7 +17,7 @@
         }
 
         body {
-            background-color: #05060f; /* دقیقاً همان رنگ تیره و عمیق صفحه انتخاب پلن شما */
+            background-color: #05060f;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -570,16 +570,14 @@
                         </div>
                     </div>
 
-                    <!-- جایگزینی Apple Pay با متد کریپتو کامپکت بدون تغییر استایل شما -->
+                    <!-- بخش کریپتو انحصاری قفل شده روی تتر شبکه ترون (USDT-TRC20) -->
                     <div class="method-item">
                         <div class="method-left">
                             <div class="radio-dot"></div>
-                            <span>Cryptocurrency</span>
+                            <span>Cryptocurrency (USDT TRC20)</span>
                         </div>
                         <div class="brand-badges">
                             <img class="badge-img" src="https://img.icons8.com/color/48/000000/tether.png" alt="USDT">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/bitcoin.png" alt="BTC">
-                            <img class="badge-img" src="https://img.icons8.com/color/48/000000/ethereum.png" alt="ETH">
                         </div>
                     </div>
 
@@ -619,7 +617,6 @@
                     <button type="button" class="promo-btn">Apply</button>
                 </div>
 
-                <!-- اتصال دکمه به اسکریپت فکتور پرداخت واقعی کریپتو -->
                 <button type="button" id="submit-pay-btn" class="btn-continue-checkout" onclick="processPayment()">Continue</button>
 
                 <div class="secure-notice">
@@ -642,7 +639,6 @@
     </main>
 
     <script>
-        // مدیریت سوییچ کردن روی متدها بدون دستکاری دیزاین
         document.querySelectorAll('.location-options .radio-box').forEach(box => {
             box.addEventListener('click', function() {
                 document.querySelectorAll('.location-options .radio-box').forEach(b => b.classList.remove('selected'));
@@ -657,12 +653,11 @@
             });
         });
 
-        // --- بارگذاری کاملاً داینامیک فاکتور بر اساس پلن انتخاب شده در صفحه یک ---
+        // لود داینامیک اطلاعات
         const savedPlanName = localStorage.getItem('selected_plan_name') || '12 Months Plan';
         const savedTotalPrice = parseFloat(localStorage.getItem('selected_plan_price') || '149.28');
-        const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; // کلید عمومی شما جهت ارسال ریکوئست ساخت فاکتور
+        const apiKey = "6197XJM-6GYMR25-QMR69X0-1JZ8E7B"; 
 
-        // تفکیک مقادیر جهت حفظ دیزاین خطی فاکتور اصلی شما
         let basePrice = savedTotalPrice;
         let discountPrice = 0;
 
@@ -674,13 +669,11 @@
             discountPrice = basePrice - savedTotalPrice;
         }
 
-        // جایگذاری داینامیک مقادیر در فاکتور شیشه‌ای سمت راست
         document.getElementById('plan-title-display').innerText = savedPlanName;
         document.getElementById('base-price-display').innerText = 'USD ' + basePrice.toFixed(2);
         document.getElementById('discount-display').innerText = '- USD ' + discountPrice.toFixed(2);
         document.getElementById('total-price-display').innerText = 'USD ' + savedTotalPrice.toFixed(2);
 
-        // --- پردازش و ایجاد تراکنش کریپتو زنده و بدون نقص ---
         async function processPayment() {
             const emailInput = document.getElementById('user-email').value;
             if(!emailInput || !emailInput.includes('@')) {
@@ -688,12 +681,12 @@
                 return;
             }
 
-            const activeMethod = document.querySelector('.payment-methods-list .method-item.selected span').innerText;
+            const selectedMethodText = document.querySelector('.payment-methods-list .method-item.selected .method-left span').innerText;
             
-            // اگر متد ارز دیجیتال انتخاب شده باشد، به فاکتور زنده NOWPayments متصل می‌شود
-            if (activeMethod === "Cryptocurrency") {
+            // درخواست فاکتور قفل شده روی ارز تتر ترون (usdttrc20) بدون نیاز به انتخاب کاربر
+            if (selectedMethodText.includes("Cryptocurrency")) {
                 const payBtn = document.getElementById('submit-pay-btn');
-                payBtn.innerText = "Connecting to Gateway...";
+                payBtn.innerText = "Generating TRC20 Invoice...";
                 payBtn.disabled = true;
 
                 const uniqueOrderId = 'ARGUS-' + Date.now();
@@ -708,6 +701,7 @@
                         body: JSON.stringify({
                             price_amount: savedTotalPrice,
                             price_currency: "usd",
+                            pay_currency: "usdttrc20", // فاکتور مستقیماً و فقط با ارز تتر شبکه ترون باز می‌شود
                             order_id: uniqueOrderId,
                             order_description: "ARGUSVPN: " + savedPlanName,
                             success_url: window.location.origin + '/success.html',
@@ -718,7 +712,7 @@
                     const data = await response.json();
 
                     if (data && data.invoice_url) {
-                        window.location.href = data.invoice_url; // انتقال مستقیم و پایدار به فاکتور کریپتو
+                        window.location.href = data.invoice_url; 
                     } else {
                         alert("Could not load payment gateway. Try again.");
                         payBtn.innerText = "Continue";
@@ -730,11 +724,9 @@
                     payBtn.disabled = false;
                 }
             } else {
-                // شبیه‌سازی متدهای دیگر (پی‌پال یا ویزاکارت) بدون به هم ریختن منطق فلو
                 window.location.href = 'success.html';
             }
         }
     </script>
 </body>
 </html>
-
