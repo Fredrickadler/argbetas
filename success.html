@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ARGUSVPN - Payment Success</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- کتابخانه رسمی سابابیس -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #05060f;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* استپ‌بار بهینه شده برای موبایل */
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin: 40px auto 20px auto;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            width: 100%;
+            max-width: 480px;
+            padding: 0 16px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .step.active {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .step.active .step-num {
+            border-color: #10b981;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .steps-divider {
+            flex: 1;
+            max-width: 50px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* کارت وضعیت تراکنش */
+        .success-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px 80px 16px;
+        }
+
+        .success-card {
+            background: rgba(10, 11, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 48px 32px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .status-icon-box {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px auto;
+        }
+
+        /* حالت موفقیت پیش‌فرض */
+        .icon-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        /* حالت در انتظار پرداخت */
+        .icon-pending {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            color: #f59e0b;
+            display: none;
+        }
+
+        .success-card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .success-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .btn-dashboard {
+            display: block;
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            padding: 16px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-dashboard:hover {
+            opacity: 0.95;
+        }
+
+        @media (max-width: 480px) {
+            .steps-container { gap: 8px; }
+            .step { font-size: 0; }
+            .step::after { content: attr(title); font-size: 12px; }
+            .steps-divider { max-width: 30px; }
+            .success-card { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+        </nav>
+    </header>
+
+    <div class="steps-container">
+        <div class="step" title="Plan"><span class="step-num">1</span></div>
+        <div class="steps-divider"></div>
+        <div class="step" title="Payment"><span class="step-num">2</span></div>
+        <div class="steps-divider"></div>
+        <div class="step active" title="Success"><span class="step-num">3</span></div>
+    </div>
+
+    <main class="success-wrapper">
+        <div class="success-card">
+            
+            <!-- آیکون تایید تیک سبز -->
+            <div class="status-icon-box icon-success" id="success-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <!-- آیکون ساعت زرد رنگ (در انتظار تایید) -->
+            <div class="status-icon-box icon-pending" id="pending-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+
+            <h1 id="status-title">Payment Received!</h1>
+            <p id="status-desc">Thank you for your purchase. Your account subscription has been successfully updated. You can now use ArgusVPN without restrictions.</p>
+
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="info-label">Order ID</span>
+                    <span class="info-value" id="display-order-id">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status</span>
+                    <span class="info-value" id="display-status" style="color: #10b981;">Completed</span>
+                </div>
+            </div>
+
+            <a href="index.html" class="btn-dashboard">Back to Home</a>
+        </div>
+    </main>
+
+    <script>
+        // متغیرهای محیطی سابابیس (مانند مرحله قبل باید با مقادیر معتبر هماهنگ باشند)
+        const SUPABASE_URL = window.env?.SUPABASE_URL || "آدرس_سابابیس_شما";
+        const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || "کلید_anon_شما";
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ۱. خواندن خودکار order_id از آدرس URL صفحه
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('order_id');
+
+        if (orderId) {
+            document.getElementById('display-order-id').innerText = orderId;
+            checkTransactionStatus(orderId);
+        }
+
+        // ۲. استعلام آنلاین وضعیت فاکتور از جدول تراکنش‌های Supabase
+        async function checkTransactionStatus(id) {
+            try {
+                const { data, error } = await supabase
+                    .from('transactions')
+                    .select('status')
+                    .eq('order_id', id)
+                    .maybeSingle();
+
+                if (error) throw error;
+
+                if (data) {
+                    const status = data.status; // مثل 'pending', 'completed', 'failed'
+                    
+                    if (status === 'pending') {
+                        // تغییر رابط کاربری به حالت «در انتظار تایید شبکه کریپتو»
+                        document.getElementById('success-icon').style.display = 'none';
+                        document.getElementById('pending-icon').style.display = 'flex';
+                        
+                        document.getElementById('status-title').innerText = "Confirming Payment...";
+                        document.getElementById('status-desc').innerText = "We detected your transaction request. Please wait a few moments until the cryptocurrency network confirms the block confirmation.";
+                        
+                        const statusElement = document.getElementById('display-status');
+                        statusElement.innerText = "Pending Confirmation";
+                        statusElement.style.color = "#f59e0b";
+
+                        // ری‌فرش خودکار وضعیت هر ۱۰ ثانیه یک‌بار جهت بررسی تایید تراکنش
+                        setTimeout(() => checkTransactionStatus(id), 10000);
+                    } else if (status === 'failed' || status === 'expired') {
+                        document.getElementById('success-icon').style.color = '#ef4444';
+                        document.getElementById('success-icon').style.borderColor = '#ef4444';
+                        document.getElementById('status-title').innerText = "Transaction Failed";
+                        document.getElementById('status-desc').innerText = "The payment window has expired or the transaction was rejected. Please try checking out again.";
+                        
+                        const statusElement = document.getElementById('display-status');
+                        statusElement.innerText = "Failed / Expired";
+                        statusElement.style.color = "#ef4444";
+                    }
+                }
+            } catch (err) {
+                console.error("Error updating interface with Supabase data status:", err);
+            }
+        }
+    </script>
+</body>
+</html>
