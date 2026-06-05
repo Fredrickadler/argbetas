@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUSVPN - Sign In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #020208;
+            /* استفاده از همان پس‌زمینه حماسی و باکیفیت صفحه اصلی برای حفظ یکپارچگی */
+            background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/0F7F9301-6C76-4FFE-8283-3FC397A104E3.png?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- هدر کپسولی یکدست سیستم آرگوس --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
+
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- بخش اصلی کارت ورود (Login Card) --- */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .login-card {
+            background: rgba(8, 9, 22, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
+                        inset -10px -10px 30px rgba(59, 120, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* خط نئونی ملایم بالای کارت لاگین */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            width: 70%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* استایل فرم و اینپوت‌ها */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s, background 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: rgba(139, 92, 246, 0.6);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* بخش مرا به خاطر بسپار و فراموشی رمز عبور */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 28px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: #ffffff;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: #ffffff;
+        }
+
+        /* دکمه کپسولی ورود */
+        .btn-submit {
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 100px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.01);
+            opacity: 0.95;
+        }
+
+        .card-footer {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .card-footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- ریسپانسیو موبایل --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .login-card {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">ARGUSVPN</a>
+            
+            <ul class="nav-links">
+                <li><a href="why-argus.html">Why ArgusVpn?</a></li>
+                <li><a href="cost.html">Cost</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="partner.html">Become a partner</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-selector">EN</button>
+                <a href="login.html" class="login-btn" style="color: #ffffff; font-weight:600;">Login</a>
+                <a href="cost.html" class="cta-btn-nav">Install ArgusVPN</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Sign in to Argus</h1>
+                <p>Enter your details below to access your account</p>
+            </div>
+
+            <form action="#" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="name@example.com" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Sign In</button>
+            </form>
+
+            <div class="card-footer">
+                Don't have an account? <a href="cost.html">Get ArgusVPN</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
