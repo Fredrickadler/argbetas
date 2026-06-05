@@ -3,74 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARGUSVPN - Pricing Plans</title>
+    <title>ArgusVPN - Cost</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
             background-color: #020208;
             background-image: url('https://github.com/Fredrickadler/argbetas/blob/main/assets/images/0F7F9301-6C76-4FFE-8283-3FC397A104E3.png?raw=true');
-            background-size: cover; background-position: center top; background-repeat: no-repeat;
-            color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif;
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* --- هدر کپسولی آرگوس --- */
-        header { width: 100%; max-width: 1200px; margin: 24px auto 0 auto; padding: 0 16px; position: relative; z-index: 10; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; padding: 10px 24px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); height: 54px; }
-        .logo { font-family: 'Audiowide', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 2px; color: #ffffff; text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 18px; align-items: center; }
-        .nav-links a { color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 12px; font-weight: 500; }
-        .nav-links a.active { color: #ffffff; }
-        .nav-actions { display: flex; align-items: center; gap: 14px; }
-        .lang-selector { background: rgba(255, 255, 255, 0.06); border: none; color: #ffffff; padding: 4px 10px; border-radius: 50px; font-size: 11px; font-weight: 600; cursor: pointer; }
-        .login-btn { color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 500; }
-        .cta-btn-nav { background-color: #ffffff; color: #000000; text-decoration: none; padding: 8px 18px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
 
-        /* Step Tracking Bar */
-        .steps-container { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 40px auto 0 auto; font-size: 14px; color: rgba(255, 255, 255, 0.35); }
-        .step { display: flex; align-items: center; gap: 8px; }
-        .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .step.active { color: #ffffff; font-weight: 600; }
-        .step.active .step-num { background: #6366f1; color: #ffffff; border-color: #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.5); }
-        .step-line { width: 40px; height: 1px; background: rgba(255, 255, 255, 0.1); }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 10px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: 54px;
+        }
 
-        /* Main Content */
-        main { flex: 1; max-width: 1100px; width: 100%; margin: 0 auto; padding: 50px 24px 80px 24px; text-align: center; }
-        .hero-title { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; }
-        .hero-subtitle { font-size: 16px; color: rgba(255, 255, 255, 0.5); margin-bottom: 48px; }
+        .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
 
-        /* Pricing Cards Grid */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-bottom: 40px; }
-        .price-card { background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 40px 32px; text-align: left; position: relative; backdrop-filter: blur(10px); display: flex; flex-direction: column; transition: border-color 0.3s; }
-        
-        /* پلن ویژه پیش فرض ۱۲ ماهه متناسب با فاکتور تصویر */
-        .price-card.featured { border-color: rgba(139, 92, 246, 0.4); background: rgba(8, 9, 28, 0.5); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .price-card.featured::before { content: 'Best Value'; position: absolute; top: 16px; right: 20px; background: #6366f1; color: #ffffff; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 18px;
+            align-items: center;
+        }
 
-        .plan-name { font-size: 18px; font-weight: 600; color: rgba(255, 255, 255, 0.6); margin-bottom: 8px; }
-        .price-card.featured .plan-name { color: #ffffff; }
-        
-        .price-wrapper { margin-bottom: 24px; }
-        .currency { font-size: 18px; font-weight: 600; vertical-align: top; margin-right: 2px; }
-        .amount { font-size: 48px; font-weight: 700; letter-spacing: -1px; }
-        .period { font-size: 14px; color: rgba(255, 255, 255, 0.4); }
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
 
-        .features-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; flex: 1; }
-        .features-list li { font-size: 14px; color: rgba(255, 255, 255, 0.7); display: flex; align-items: center; gap: 10px; }
-        .features-list li::before { content: '✓'; color: #6366f1; font-weight: bold; }
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+        }
 
-        /* اتصال مستقیم دکمه‌ها به صفحه Payment Information */
-        .btn-plan { display: block; width: 100%; text-align: center; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: #ffffff; text-decoration: none; padding: 14px; border-radius: 100px; font-size: 14px; font-weight: 600; transition: background 0.2s, color 0.2s; }
-        .price-card.featured .btn-plan { background: #ffffff; color: #000000; border: none; }
-        .price-card.featured .btn-plan:hover { opacity: 0.95; }
-        .btn-plan:hover { background: rgba(255, 255, 255, 0.08); }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
 
-        @media (max-width: 900px) {
-            .pricing-grid { grid-template-columns: 1fr; gap: 24px; }
-            .nav-links { display: none; }
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cta-btn-nav {
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px 80px 16px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .title-container {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .title-container h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .title-container p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .pricing-container {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 32px;
+            padding: 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .price-card {
+            flex: 1;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 22px;
+            padding: 40px 32px;
+            cursor: pointer;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .price-card:hover, .price-card.active {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: #ffffff;
+            color: #000000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .plan-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price-card.active .plan-title {
+            color: #ffffff;
+        }
+
+        .price-big {
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .price-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 40px;
+        }
+
+        /* دکمه‌های کپسولی متصل به مرحله اطلاعات پرداخت */
+        .card-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .price-card.active .card-btn, .price-card:hover .card-btn {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .guarantee-text {
+            margin-top: 32px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 850px) {
+            .pricing-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -94,62 +276,48 @@
         </nav>
     </header>
 
-    <!-- شروع فاز خرید: استپ ۱ فعال است -->
-    <div class="steps-container">
-        <div class="step active"><span class="step-num">1</span><span>Subscription</span></div>
-        <div class="step-line"></div>
-        <div class="step"><span class="step-num">2</span><span>Payment information</span></div>
-        <div class="step-line"></div>
-        <div class="step"><span class="step-num">3</span><span>Payment</span></div>
-    </div>
-
     <main>
-        <h1 class="hero-title">Ready to secure your privacy?</h1>
-        <p class="hero-subtitle">Choose the plan that fits you best. All plans include 30-day money-back guarantee.</p>
+        <div class="title-container">
+            <h1>Choose your plan</h1>
+            <p>All plans include a 30-day money-back guarantee.</p>
+        </div>
 
-        <div class="pricing-grid">
+        <div class="pricing-container">
             <!-- پلن ۱ ماهه -->
             <div class="price-card">
-                <div class="plan-name">1-Month Plan</div>
-                <div class="price-wrapper">
-                    <span class="currency">USD</span><span class="amount">9.99</span><span class="period"> / mo</span>
+                <div>
+                    <div class="plan-title">1 Month</div>
+                    <div class="price-big">$11.99</div>
+                    <div class="price-sub">Billed every month</div>
                 </div>
-                <ul class="features-list">
-                    <li>High-speed global servers</li>
-                    <li>Strict no-logs policy</li>
-                    <li>Connect 5 devices simultaneously</li>
-                </ul>
-                <a href="payment-info.html" class="btn-plan">Get ArgusVPN</a>
+                <a href="payment-info.html" class="card-btn">Get ArgusVPN</a>
             </div>
 
-            <!-- پلن ۱۲ ماهه (منطبق با عکس ارسالی) -->
-            <div class="price-card featured">
-                <div class="plan-name">12-Month Plan</div>
-                <div class="price-wrapper">
-                    <span class="currency">USD</span><span class="amount">4.99</span><span class="period"> / mo</span>
+            <!-- پلن ۱۲ ماهه (فعال) -->
+            <div class="price-card active">
+                <span class="badge">Save 50%</span>
+                <div>
+                    <div class="plan-title">12 Months</div>
+                    <div class="price-big">$4.99</div>
+                    <div class="price-sub">Billed $59.88 every year</div>
                 </div>
-                <ul class="features-list">
-                    <li>Save 50% on subscription</li>
-                    <li>Ultra-fast dedicated servers</li>
-                    <li>Connect up to 10 devices</li>
-                    <li>24/7 Premium Support access</li>
-                </ul>
-                <a href="payment-info.html" class="btn-plan">Get ArgusVPN</a>
+                <a href="payment-info.html" class="card-btn">Get ArgusVPN</a>
             </div>
 
             <!-- پلن ۲۴ ماهه -->
             <div class="price-card">
-                <div class="plan-name">24-Month Plan</div>
-                <div class="price-wrapper">
-                    <span class="currency">USD</span><span class="amount">3.29</span><span class="period"> / mo</span>
+                <div>
+                    <div class="plan-title">24 Months</div>
+                    <div class="price-big">$3.15</div>
+                    <div class="price-sub">Billed $75.60 every 2 years</div>
                 </div>
-                <ul class="features-list">
-                    <li>Maximum savings plan</li>
-                    <li>Enterprise-grade encryption</li>
-                    <li>Dedicated IP options available</li>
-                </ul>
-                <a href="payment-info.html" class="btn-plan">Get ArgusVPN</a>
+                <a href="payment-info.html" class="card-btn">Get ArgusVPN</a>
             </div>
+        </div>
+
+        <div class="guarantee-text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            30-day money-back guarantee. Secure checkout.
         </div>
     </main>
 
